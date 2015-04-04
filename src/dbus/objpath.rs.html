@@ -527,12 +527,26 @@
 <span id="485">485</span>
 <span id="486">486</span>
 <span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>Connection</span>, <span class='ident'>Message</span>, <span class='ident'>MessageItem</span>, <span class='ident'>Error</span>, <span class='ident'>TypeSig</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>BTreeMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::{<span class='ident'>Cell</span>, <span class='ident'>RefCell</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>IntoCow</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
 
 <span class='doccomment'>/// a Method has a list of Arguments.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Argument</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
@@ -541,8 +555,8 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Argument</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>IntoCow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span>(<span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>, <span class='ident'>sig</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Argument</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>Argument</span> { <span class='ident'>name</span>: <span class='ident'>name</span>, <span class='ident'>sig</span>: <span class='ident'>sig</span>.<span class='ident'>into_cow</span>() }
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>, <span class='ident'>sig</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Argument</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>Argument</span> { <span class='ident'>name</span>: <span class='ident'>name</span>, <span class='ident'>sig</span>: <span class='ident'>sig</span>.<span class='ident'>into</span>() }
     }
 }
 
@@ -663,14 +677,14 @@
 
 <span class='doccomment'>/// Represents a D-Bus object path, which can in turn contain Interfaces.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='comment'>// We need a weak ref for the introspector, hence this extra boxing</span>
+    <span class='comment'>// We need extra references for the introspector and property handlers, hence this extra boxing</span>
     <span class='ident'>i</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>IObjectPath</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>unsafe_destructor</span>]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>IObjectPath</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>set_registered</span>(<span class='boolval'>false</span>);
+        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>set_registered</span>(<span class='boolval'>false</span>);
+        <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>interfaces</span>.<span class='ident'>borrow_mut</span>().<span class='ident'>clear</span>(); <span class='comment'>// This should remove all the other references to i</span>
     }
 }
 
@@ -838,10 +852,10 @@
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>o</span> <span class='op'>=</span> <span class='ident'>ObjectPath</span> { <span class='ident'>i</span>: <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>i</span>) };
 
         <span class='kw'>if</span> <span class='ident'>introspectable</span> {
-            <span class='kw'>let</span> <span class='ident'>o_weak</span> <span class='op'>=</span> <span class='ident'>o</span>.<span class='ident'>i</span>.<span class='ident'>downgrade</span>();
+            <span class='kw'>let</span> <span class='ident'>o_cl</span> <span class='op'>=</span> <span class='ident'>o</span>.<span class='ident'>i</span>.<span class='ident'>clone</span>();
             <span class='kw'>let</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='ident'>Interface</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>(
                 <span class='ident'>Method</span>::<span class='ident'>new</span>(<span class='string'>&quot;Introspect&quot;</span>, <span class='macro'>vec</span><span class='macro'>!</span>(), <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>Argument</span>::<span class='ident'>new</span>(<span class='string'>&quot;xml_data&quot;</span>, <span class='string'>&quot;s&quot;</span>)),
-                    <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>m</span><span class='op'>|</span> { <span class='ident'>o_weak</span>.<span class='ident'>upgrade</span>().<span class='ident'>unwrap</span>().<span class='ident'>introspect</span>(<span class='ident'>m</span>) }))), <span class='macro'>vec</span><span class='macro'>!</span>(), <span class='macro'>vec</span><span class='macro'>!</span>());
+                    <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>m</span><span class='op'>|</span> { <span class='ident'>o_cl</span>.<span class='ident'>introspect</span>(<span class='ident'>m</span>) }))), <span class='macro'>vec</span><span class='macro'>!</span>(), <span class='macro'>vec</span><span class='macro'>!</span>());
             <span class='ident'>o</span>.<span class='ident'>insert_interface</span>(<span class='string'>&quot;org.freedesktop.DBus.Introspectable&quot;</span>, <span class='ident'>i</span>);
         }
         <span class='ident'>o</span>
@@ -849,21 +863,21 @@
 
     <span class='kw'>fn</span> <span class='ident'>add_property_handler</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>interfaces</span>.<span class='ident'>borrow</span>().<span class='ident'>contains_key</span>(<span class='string'>&quot;org.freedesktop.DBus.Properties&quot;</span>) { <span class='kw'>return</span> };
-        <span class='kw'>let</span> (<span class='ident'>weak1</span>, <span class='ident'>weak2</span>, <span class='ident'>weak3</span>) <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>downgrade</span>(), <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>downgrade</span>(), <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>downgrade</span>());
+        <span class='kw'>let</span> (<span class='ident'>cl1</span>, <span class='ident'>cl2</span>, <span class='ident'>cl3</span>) <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>clone</span>(), <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>clone</span>(), <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>clone</span>());
         <span class='kw'>let</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='ident'>Interface</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>(
             <span class='ident'>Method</span>::<span class='ident'>new</span>(<span class='string'>&quot;Get&quot;</span>,
                 <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>Argument</span>::<span class='ident'>new</span>(<span class='string'>&quot;interface_name&quot;</span>, <span class='string'>&quot;s&quot;</span>), <span class='ident'>Argument</span>::<span class='ident'>new</span>(<span class='string'>&quot;property_name&quot;</span>, <span class='string'>&quot;s&quot;</span>)),
                 <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>Argument</span>::<span class='ident'>new</span>(<span class='string'>&quot;value&quot;</span>, <span class='string'>&quot;v&quot;</span>)),
-                <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>m</span><span class='op'>|</span> <span class='ident'>weak1</span>.<span class='ident'>upgrade</span>().<span class='ident'>unwrap</span>().<span class='ident'>property_get</span>(<span class='ident'>m</span>))),
+                <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>m</span><span class='op'>|</span> <span class='ident'>cl1</span>.<span class='ident'>property_get</span>(<span class='ident'>m</span>))),
             <span class='ident'>Method</span>::<span class='ident'>new</span>(<span class='string'>&quot;GetAll&quot;</span>,
                 <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>Argument</span>::<span class='ident'>new</span>(<span class='string'>&quot;interface_name&quot;</span>, <span class='string'>&quot;s&quot;</span>)),
                 <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>Argument</span>::<span class='ident'>new</span>(<span class='string'>&quot;props&quot;</span>, <span class='string'>&quot;a{sv}&quot;</span>)),
-                <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>m</span><span class='op'>|</span> <span class='ident'>weak2</span>.<span class='ident'>upgrade</span>().<span class='ident'>unwrap</span>().<span class='ident'>property_getall</span>(<span class='ident'>m</span>))),
+                <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>m</span><span class='op'>|</span> <span class='ident'>cl2</span>.<span class='ident'>property_getall</span>(<span class='ident'>m</span>))),
             <span class='ident'>Method</span>::<span class='ident'>new</span>(<span class='string'>&quot;Set&quot;</span>,
                 <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>Argument</span>::<span class='ident'>new</span>(<span class='string'>&quot;interface_name&quot;</span>, <span class='string'>&quot;s&quot;</span>), <span class='ident'>Argument</span>::<span class='ident'>new</span>(<span class='string'>&quot;property_name&quot;</span>, <span class='string'>&quot;s&quot;</span>),
                     <span class='ident'>Argument</span>::<span class='ident'>new</span>(<span class='string'>&quot;value&quot;</span>, <span class='string'>&quot;v&quot;</span>)),
                 <span class='macro'>vec</span><span class='macro'>!</span>(),
-                <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>m</span><span class='op'>|</span> <span class='ident'>weak3</span>.<span class='ident'>upgrade</span>().<span class='ident'>unwrap</span>().<span class='ident'>property_set</span>(<span class='ident'>m</span>)))),
+                <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>m</span><span class='op'>|</span> <span class='ident'>cl3</span>.<span class='ident'>property_set</span>(<span class='ident'>m</span>)))),
             <span class='macro'>vec</span><span class='macro'>!</span>(), <span class='macro'>vec</span><span class='macro'>!</span>());
         <span class='self'>self</span>.<span class='ident'>insert_interface</span>(<span class='string'>&quot;org.freedesktop.DBus.Properties&quot;</span>, <span class='ident'>i</span>);
     }
@@ -883,11 +897,11 @@
         <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>set_registered</span>(<span class='ident'>register</span>)
     }
 
-    <span class='comment'>/* Return value:
-       None =&gt; not handled,
-       Some(Err(())) =&gt; message reply send failed,
-       Some(Ok()) =&gt; message reply send ok */</span>
 
+    <span class='doccomment'>/// Handles a method call if the object path matches.</span>
+    <span class='doccomment'>/// Return value: None =&gt; not handled (no match),</span>
+    <span class='doccomment'>/// Some(Err(())) =&gt; message reply send failed,</span>
+    <span class='doccomment'>/// Some(Ok()) =&gt; message reply send ok */</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>handle_message</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>msg</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Message</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;&gt;</span> {
         <span class='kw'>let</span> (_, <span class='ident'>path</span>, <span class='ident'>iface</span>, <span class='ident'>method</span>) <span class='op'>=</span> <span class='ident'>msg</span>.<span class='ident'>headers</span>();
         <span class='kw'>if</span> <span class='ident'>path</span>.<span class='ident'>is_none</span>() <span class='op'>||</span> <span class='ident'>path</span>.<span class='ident'>unwrap</span>() <span class='op'>!=</span> <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>path</span> { <span class='kw'>return</span> <span class='prelude-val'>None</span>; }
@@ -964,6 +978,20 @@
 
     <span class='ident'>thread</span>.<span class='ident'>join</span>();
 }
+
+
+<span class='doccomment'>/// Currently commented out because it requires feature(alloc)</span>
+<span class='comment'>/*
+#[test]
+fn test_refcount() {
+    let c = Connection::get_private(super::BusType::Session).unwrap();
+    let i = {
+        let o = make_objpath(&amp;c);
+        o.i.clone()
+    };
+    assert!(::std::rc::is_unique(&amp;i));
+}
+*/</span>
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
 <span class='kw'>fn</span> <span class='ident'>test_introspect</span>() {

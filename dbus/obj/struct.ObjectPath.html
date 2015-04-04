@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>dbus</a>::<wbr><a href='index.html'>obj</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Argument.html' title='a Method has a list of Arguments.'>Argument</a><a class='struct ' href='struct.Interface.html' title='Interfaces can contain Methods, Properties, and Signals.'>Interface</a><a class='struct ' href='struct.Method.html' title='a method that can be called from another application'>Method</a><a class='struct current' href='struct.ObjectPath.html' title='Represents a D-Bus object path, which can in turn contain Interfaces.'>ObjectPath</a><a class='struct ' href='struct.Property.html' title='Properties that a remote application can get/set.'>Property</a><a class='struct ' href='struct.Signal.html' title='declares that an Interface can send this signal'>Signal</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.PropertyROHandler.html' title=''>PropertyROHandler</a><a class='trait ' href='trait.PropertyRWHandler.html' title=''>PropertyRWHandler</a><a class='trait ' href='trait.PropertyWOHandler.html' title=''>PropertyWOHandler</a></div>
+        <p class='location'><a href='../index.html'>dbus</a>::<wbr><a href='index.html'>obj</a></p><script>window.sidebarCurrent = {name: 'ObjectPath', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>dbus</a>::<wbr><a href='index.html'>obj</a>::<wbr><a class='struct' href=''>ObjectPath</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-11515' href='../../src/dbus/objpath.rs.html#135-138'>[src]</a></span></h1>
+        </span><a id='src-10888' href='../../src/dbus/objpath.rs.html#135-138'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ObjectPath&lt;'a&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>Represents a D-Bus object path, which can in turn contain Interfaces.</p>
@@ -52,6 +52,11 @@
 <h4 id='method.is_registered' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.is_registered' class='fnname'>is_registered</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.set_registered' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.set_registered' class='fnname'>set_registered</a>(&amp;mut self, register: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='../../dbus/struct.Error.html' title='dbus::Error'>Error</a>&gt;</code></h4>
 <h4 id='method.handle_message' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.handle_message' class='fnname'>handle_message</a>(&amp;mut self, msg: &amp;mut <a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;&gt;</code></h4>
+<div class='docblock'><p>Handles a method call if the object path matches.
+Return value: None =&gt; not handled (no match),
+Some(Err(())) =&gt; message reply send failed,
+Some(Ok()) =&gt; message reply send ok */</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl&lt;'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../../dbus/obj/struct.ObjectPath.html' title='dbus::obj::ObjectPath'>ObjectPath</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.drop' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='#method.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

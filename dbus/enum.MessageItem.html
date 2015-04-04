@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='index.html'>dbus</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='obj/index.html' title='Contains functionality for the &quot;server&quot; of a D-Bus object. A remote application can introspect this object and call methods on it.'>obj</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Connection.html' title='A D-Bus connection. Start here if you want to get on the D-Bus!'>Connection</a><a class='struct ' href='struct.ConnectionItems.html' title='ConnectionItem iterator'>ConnectionItems</a><a class='struct ' href='struct.Error.html' title='D-Bus Error wrapper'>Error</a><a class='struct ' href='struct.Message.html' title='A D-Bus message. A message contains some headers (e g sender and destination address) and a list of MessageItems.'>Message</a><a class='struct ' href='struct.OwnedFd.html' title='An RAII wrapper around Fd to ensure that file descriptor is closed when the scope ends.'>OwnedFd</a><a class='struct ' href='struct.PropHandler.html' title='Wrapper around Props that keeps a map of fetched properties.'>PropHandler</a><a class='struct ' href='struct.Props.html' title='Client side properties - get and set properties on a remote application.'>Props</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='enum.BusType.html' title=''>BusType</a><a class='enum ' href='enum.ConnectionItem.html' title='When listening for incoming events on the D-Bus, this enum will tell you what type of incoming event has happened.'>ConnectionItem</a><a class='enum current' href='enum.MessageItem.html' title='MessageItem - used as parameters and return values from method calls, or as data added to a signal.'>MessageItem</a><a class='enum ' href='enum.MessageType.html' title=''>MessageType</a><a class='enum ' href='enum.NameFlag.html' title=''>NameFlag</a><a class='enum ' href='enum.ReleaseNameReply.html' title=''>ReleaseNameReply</a><a class='enum ' href='enum.RequestNameReply.html' title=''>RequestNameReply</a></div>
+        <p class='location'><a href='index.html'>dbus</a></p><script>window.sidebarCurrent = {name: 'MessageItem', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -43,7 +43,7 @@
     <section id='main' class="content enum">
 <h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>dbus</a>::<wbr><a class='enum' href=''>MessageItem</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-3087' href='../src/dbus/message.rs.html#65-82'>[src]</a></span></h1>
+        </span><a id='src-2823' href='../src/dbus/message.rs.html#65-82'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum MessageItem {
     Array(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a>&gt;, <a class='type' href='../dbus/type.TypeSig.html' title='dbus::TypeSig'>TypeSig</a>&lt;'static&gt;),
     Struct(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a>&gt;),

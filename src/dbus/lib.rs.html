@@ -507,21 +507,15 @@
 <span id="465">465</span>
 <span id="466">466</span>
 <span id="467">467</span>
-<span id="468">468</span>
-<span id="469">469</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! D-Bus bindings for Rust</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! [D-Bus](http://dbus.freedesktop.org/) is a message bus, and is mainly used in Linux</span>
 <span class='doccomment'>//! for communication between processes. It is present by default on almost every</span>
-<span class='doccomment'>//! Linux distribution out there, and run in two instances - one per session, and one</span>
+<span class='doccomment'>//! Linux distribution out there, and runs in two instances - one per session, and one</span>
 <span class='doccomment'>//! system-wide.</span>
-
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>unsafe_destructor</span>, <span class='ident'>alloc</span>, <span class='ident'>core</span>, <span class='ident'>libc</span>, <span class='ident'>std_misc</span>)]</span>
-
-<span class='comment'>// This is just for the unixfd test, but you can&#39;t enable features just for test,</span>
-<span class='comment'>// so you&#39;ll get warnings one way or the other...</span>
-<span class='comment'>// #![feature(fs, io, path, tempdir)]</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! See the examples directory for some examples to get you started.</span>
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
 
@@ -536,10 +530,10 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>prop</span>::<span class='ident'>Props</span>;
 
 <span class='doccomment'>/// A TypeSig describes the type of a MessageItem.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>TypeSig</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>std</span>::<span class='ident'>string</span>::<span class='ident'>CowString</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>;
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>TypeSig</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>str</span><span class='op'>&gt;</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::{<span class='ident'>CString</span>, <span class='ident'>CStr</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>::{<span class='self'>self</span>, <span class='ident'>PtrExt</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>::{<span class='self'>self</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>LinkedList</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::{<span class='ident'>Cell</span>, <span class='ident'>RefCell</span>};
 
@@ -579,17 +573,17 @@
     <span class='kw'>else</span> { <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>from_utf8</span>( <span class='kw'>unsafe</span> { <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='op'>*</span><span class='ident'>c</span>).<span class='ident'>to_bytes</span>() }).<span class='ident'>ok</span>() }
 }
 
-<span class='kw'>fn</span> <span class='ident'>to_c_str</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Str</span><span class='op'>&gt;</span>(<span class='ident'>n</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>CString</span> { <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>n</span>.<span class='ident'>as_slice</span>().<span class='ident'>as_bytes</span>()).<span class='ident'>unwrap</span>() }
+<span class='kw'>fn</span> <span class='ident'>to_c_str</span>(<span class='ident'>n</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>CString</span> { <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>n</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>unwrap</span>() }
 
 <span class='kw'>impl</span> <span class='ident'>Error</span> {
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>e</span>: <span class='ident'>ffi</span>::<span class='ident'>DBusError</span>) <span class='op'>-&gt;</span> <span class='ident'>Error</span> {
-        <span class='ident'>Error</span> { <span class='ident'>e</span>: <span class='ident'>e</span> }
-    }
+<span class='comment'>/*    fn new(e: ffi::DBusError) -&gt; Error {
+        Error { e: e }
+    }*/</span>
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_custom</span>(<span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>message</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Error</span> {
         <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>name</span>);
-        <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>message</span>.<span class='ident'>replace</span>(<span class='string'>&quot;%&quot;</span>,<span class='string'>&quot;%%&quot;</span>));
+        <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='kw-2'>&amp;</span><span class='ident'>message</span>.<span class='ident'>replace</span>(<span class='string'>&quot;%&quot;</span>,<span class='string'>&quot;%%&quot;</span>));
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>Error</span>::<span class='ident'>empty</span>();
 
         <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>dbus_set_error</span>(<span class='ident'>e</span>.<span class='ident'>get_mut</span>(), <span class='ident'>n</span>.<span class='ident'>as_ptr</span>(), <span class='ident'>m</span>.<span class='ident'>as_ptr</span>()) };
@@ -608,12 +602,14 @@
         <span class='ident'>Error</span>{ <span class='ident'>e</span>: <span class='ident'>e</span> }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>ffi</span>::<span class='ident'>DBusError</span> { <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>e</span> }
+<span class='comment'>/*    fn get(&amp;self) -&gt; &amp;ffi::DBusError { &amp;self.e } */</span>
 
+    <span class='doccomment'>/// Error name/type, e g &#39;org.freedesktop.DBus.Error.Failed&#39;</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>name</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
         <span class='ident'>c_str_to_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>e</span>.<span class='ident'>name</span>)
     }
 
+    <span class='doccomment'>/// Custom message, e g &#39;Could not find a matching object path&#39;</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>message</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
         <span class='ident'>c_str_to_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>e</span>.<span class='ident'>message</span>)
     }
