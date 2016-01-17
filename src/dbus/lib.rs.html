@@ -9,6 +9,7 @@
 
     <title>lib.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,10 +25,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -606,6 +607,7 @@
 <span id="564">564</span>
 <span id="565">565</span>
 <span id="566">566</span>
+<span id="567">567</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! D-Bus bindings for Rust</span>
 <span class='doccomment'>//!</span>
@@ -687,6 +689,7 @@
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>methoddisp</span>::{<span class='ident'>Factory</span>, <span class='ident'>Tree</span>, <span class='ident'>TreeServer</span>, <span class='ident'>ObjectPath</span>, <span class='ident'>Interface</span>, <span class='ident'>Signal</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>methoddisp</span>::{<span class='ident'>Property</span>, <span class='ident'>EmitsChangedSignal</span>, <span class='ident'>Access</span>};
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>methoddisp</span>::{<span class='ident'>Method</span>, <span class='ident'>MethodErr</span>, <span class='ident'>MethodResult</span>, <span class='ident'>Argument</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>methoddisp</span>::{<span class='ident'>MethodFn</span>, <span class='ident'>MethodFnMut</span>, <span class='ident'>MethodSync</span>};
 }
 
 <span class='kw'>static</span> <span class='ident'>INITDBUS</span>: <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Once</span> <span class='op'>=</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>ONCE_INIT</span>;
@@ -1179,10 +1182,12 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -1199,7 +1204,7 @@
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -1219,7 +1224,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
@@ -1231,6 +1236,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@
 
     <title>dbus::tree::Property - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,10 +25,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>dbus</a>::<wbr><a href='index.html'>tree</a></p><script>window.sidebarCurrent = {name: 'Property', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,12 +46,12 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-24491' class='srclink' href='../../src/dbus/methoddisp.rs.html#233-241' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-3294' class='srclink' href='../../src/dbus/methoddisp.rs.html#238-246' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Property&lt;M&gt; {
     // some fields omitted
-}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;M: MCall&gt; <a class='struct' href='../../dbus/tree/struct.Property.html' title='dbus::tree::Property'>Property</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.get_value' class='method'><code>fn <a href='#method.get_value' class='fnname'>get_value</a>(&amp;self) -&gt; <a class='enum' href='../../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a></code></h4>
+}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;M: MethodType&gt; <a class='struct' href='../../dbus/tree/struct.Property.html' title='dbus::tree::Property'>Property</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.get_value' class='method'><code>fn <a href='#method.get_value' class='fnname'>get_value</a>(&amp;self) -&gt; <a class='enum' href='../../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a></code></h4>
 <h4 id='method.get_signal' class='method'><code>fn <a href='#method.get_signal' class='fnname'>get_signal</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>&gt;</code></h4>
-<h4 id='method.set_value' class='method'><code>fn <a href='#method.set_value' class='fnname'>set_value</a>(&amp;self, m: <a class='enum' href='../../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>&gt;, <a href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<h4 id='method.set_value' class='method'><code>fn <a href='#method.set_value' class='fnname'>set_value</a>(&amp;self, m: <a class='enum' href='../../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>&gt;, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
 <div class='docblock'><p>Returns error if &quot;emits&quot; is &quot;Const&quot;, and the property is in a tree.
 Returns messages to be sent over a connection, this could be the PropertiesChanged signal.</p>
 </div><h4 id='method.emits_changed' class='method'><code>fn <a href='#method.emits_changed' class='fnname'>emits_changed</a>(self, e: <a class='enum' href='../../dbus/tree/enum.EmitsChangedSignal.html' title='dbus::tree::EmitsChangedSignal'>EmitsChangedSignal</a>) -&gt; Self</code></h4>
@@ -61,15 +62,15 @@ Returns messages to be sent over a connection, this could be the PropertiesChang
 </div><h4 id='method.annotate' class='method'><code>fn <a href='#method.annotate' class='fnname'>annotate</a>&lt;N: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;, V: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;(self, name: N, value: V) -&gt; Self</code></h4>
 <h4 id='method.deprecated' class='method'><code>fn <a href='#method.deprecated' class='fnname'>deprecated</a>(self) -&gt; Self</code></h4>
 <div class='docblock'><p>Add an annotation that this entity is deprecated.</p>
-</div></div><h3 class='impl'><code>impl <a class='struct' href='../../dbus/tree/struct.Property.html' title='dbus::tree::Property'>Property</a>&lt;MethodSync&gt;</code></h3><div class='impl-items'><h4 id='method.on_set' class='method'><code>fn <a href='#method.on_set' class='fnname'>on_set</a>&lt;H&gt;(self, m: H) -&gt; Self <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;MethodSync&gt;, &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;MethodSync&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + 'static</span></code></h4>
+</div></div><h3 class='impl'><code>impl <a class='struct' href='../../dbus/tree/struct.Property.html' title='dbus::tree::Property'>Property</a>&lt;<a class='struct' href='../../dbus/tree/struct.MethodSync.html' title='dbus::tree::MethodSync'>MethodSync</a>&gt;</code></h3><div class='impl-items'><h4 id='method.on_set' class='method'><code>fn <a href='#method.on_set' class='fnname'>on_set</a>&lt;H&gt;(self, m: H) -&gt; Self <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;<a class='struct' href='../../dbus/tree/struct.MethodSync.html' title='dbus::tree::MethodSync'>MethodSync</a>&gt;, &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;<a class='struct' href='../../dbus/tree/struct.MethodSync.html' title='dbus::tree::MethodSync'>MethodSync</a>&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + 'static</span></code></h4>
 <div class='docblock'><p>Sets a callback to be called when a &quot;Set&quot; call is coming in from the remote side.
 Might change to something more ergonomic.
 For multi-thread use.</p>
-</div></div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../../dbus/tree/struct.Property.html' title='dbus::tree::Property'>Property</a>&lt;MethodFn&lt;'a&gt;&gt;</code></h3><div class='impl-items'><h4 id='method.on_set' class='method'><code>fn <a href='#method.on_set' class='fnname'>on_set</a>&lt;H: 'a&gt;(self, m: H) -&gt; Self <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;MethodFn&lt;'a&gt;&gt;, &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;MethodFn&lt;'a&gt;&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a></span></code></h4>
+</div></div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../../dbus/tree/struct.Property.html' title='dbus::tree::Property'>Property</a>&lt;<a class='struct' href='../../dbus/tree/struct.MethodFn.html' title='dbus::tree::MethodFn'>MethodFn</a>&lt;'a&gt;&gt;</code></h3><div class='impl-items'><h4 id='method.on_set-1' class='method'><code>fn <a href='#method.on_set' class='fnname'>on_set</a>&lt;H: 'a&gt;(self, m: H) -&gt; Self <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;<a class='struct' href='../../dbus/tree/struct.MethodFn.html' title='dbus::tree::MethodFn'>MethodFn</a>&lt;'a&gt;&gt;, &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;<a class='struct' href='../../dbus/tree/struct.MethodFn.html' title='dbus::tree::MethodFn'>MethodFn</a>&lt;'a&gt;&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a></span></code></h4>
 <div class='docblock'><p>Sets a callback to be called when a &quot;Set&quot; call is coming in from the remote side.
 Might change to something more ergonomic.
 For single-thread use.</p>
-</div></div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../../dbus/tree/struct.Property.html' title='dbus::tree::Property'>Property</a>&lt;MethodFnMut&lt;'a&gt;&gt;</code></h3><div class='impl-items'><h4 id='method.on_set' class='method'><code>fn <a href='#method.on_set' class='fnname'>on_set</a>&lt;H: 'a&gt;(self, m: H) -&gt; Self <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='core::ops::FnMut'>FnMut</a>(&amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;MethodFnMut&lt;'a&gt;&gt;, &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;MethodFnMut&lt;'a&gt;&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a></span></code></h4>
+</div></div><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../../dbus/tree/struct.Property.html' title='dbus::tree::Property'>Property</a>&lt;<a class='struct' href='../../dbus/tree/struct.MethodFnMut.html' title='dbus::tree::MethodFnMut'>MethodFnMut</a>&lt;'a&gt;&gt;</code></h3><div class='impl-items'><h4 id='method.on_set-2' class='method'><code>fn <a href='#method.on_set' class='fnname'>on_set</a>&lt;H: 'a&gt;(self, m: H) -&gt; Self <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='core::ops::FnMut'>FnMut</a>(&amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;<a class='struct' href='../../dbus/tree/struct.MethodFnMut.html' title='dbus::tree::MethodFnMut'>MethodFnMut</a>&lt;'a&gt;&gt;, &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;<a class='struct' href='../../dbus/tree/struct.MethodFnMut.html' title='dbus::tree::MethodFnMut'>MethodFnMut</a>&lt;'a&gt;&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a></span></code></h4>
 <div class='docblock'><p>Sets a callback to be called when a &quot;Set&quot; call is coming in from the remote side.
 Might change to something more ergonomic.
 For single-thread use.</p>
@@ -79,10 +80,12 @@ For single-thread use.</p>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -99,7 +102,7 @@ For single-thread use.</p>
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -119,7 +122,7 @@ For single-thread use.</p>
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
@@ -131,6 +134,6 @@ For single-thread use.</p>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

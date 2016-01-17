@@ -9,6 +9,7 @@
 
     <title>dbus::tree::Method - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,10 +25,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>dbus</a>::<wbr><a href='index.html'>tree</a></p><script>window.sidebarCurrent = {name: 'Method', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-22290' class='srclink' href='../../src/dbus/methoddisp.rs.html#127-133' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-3060' class='srclink' href='../../src/dbus/methoddisp.rs.html#132-138' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Method&lt;M&gt; {
     // some fields omitted
 }</pre><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;M&gt; <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.in_arg' class='method'><code>fn <a href='#method.in_arg' class='fnname'>in_arg</a>&lt;A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;&gt;(self, a: A) -&gt; Self</code></h4>
@@ -56,17 +57,19 @@
 <div class='docblock'><p>Add an annotation to the method</p>
 </div><h4 id='method.deprecated' class='method'><code>fn <a href='#method.deprecated' class='fnname'>deprecated</a>(self) -&gt; Self</code></h4>
 <div class='docblock'><p>Add an annotation that this entity is deprecated.</p>
-</div></div><h3 class='impl'><code>impl&lt;M: MCall&gt; <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.call' class='method'><code>fn <a href='#method.call' class='fnname'>call</a>(&amp;self, m: &amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, o: &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;M&gt;, i: &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;M&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a></code></h4>
+</div></div><h3 class='impl'><code>impl&lt;M: MethodType&gt; <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.call' class='method'><code>fn <a href='#method.call' class='fnname'>call</a>(&amp;self, m: &amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, o: &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;M&gt;, i: &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;M&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a></code></h4>
 </div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl&lt;M: <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -83,7 +86,7 @@
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -103,7 +106,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
@@ -115,6 +118,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

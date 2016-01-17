@@ -9,6 +9,7 @@
 
     <title>dbus::tree::Signal - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,10 +25,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>dbus</a>::<wbr><a href='index.html'>tree</a></p><script>window.sidebarCurrent = {name: 'Signal', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,10 +46,10 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-25378' class='srclink' href='../../src/dbus/methoddisp.rs.html#364-369' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-3401' class='srclink' href='../../src/dbus/methoddisp.rs.html#369-374' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Signal {
     // some fields omitted
-}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../dbus/tree/struct.Signal.html' title='dbus::tree::Signal'>Signal</a></code></h3><div class='impl-items'><h4 id='method.emit' class='method'><code>fn <a href='#method.emit' class='fnname'>emit</a>(&amp;self, items: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='enum' href='../../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a><a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a></code></h4>
+}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../dbus/tree/struct.Signal.html' title='dbus::tree::Signal'>Signal</a></code></h3><div class='impl-items'><h4 id='method.emit' class='method'><code>fn <a href='#method.emit' class='fnname'>emit</a>(&amp;self, items: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='enum' href='../../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a></code></h4>
 <div class='docblock'><p>Returns a message which emits the signal when sent.
 Panics if the signal is not inserted in an object path.</p>
 </div><h4 id='method.arg' class='method'><code>fn <a href='#method.arg' class='fnname'>arg</a>&lt;A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;&gt;(self, a: A) -&gt; Self</code></h4>
@@ -62,10 +63,12 @@ Panics if the signal is not inserted in an object path.</p>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -82,7 +85,7 @@ Panics if the signal is not inserted in an object path.</p>
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -102,7 +105,7 @@ Panics if the signal is not inserted in an object path.</p>
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
@@ -114,6 +117,6 @@ Panics if the signal is not inserted in an object path.</p>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

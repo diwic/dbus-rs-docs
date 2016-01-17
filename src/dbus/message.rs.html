@@ -9,6 +9,7 @@
 
     <title>message.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,10 +25,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -870,6 +871,11 @@
 <span id="828">828</span>
 <span id="829">829</span>
 <span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>fmt</span>, <span class='ident'>mem</span>, <span class='ident'>ptr</span>};
@@ -958,6 +964,8 @@
     <span class='doccomment'>/// A D-Bus objectpath requires its content to be a valid objectpath,</span>
     <span class='doccomment'>/// so this cannot be any string.</span>
     <span class='ident'>ObjectPath</span>(<span class='ident'>Path</span>),
+    <span class='doccomment'>/// A D-Bus String is zero terminated, so no \0 s in the String, please.</span>
+    <span class='doccomment'>/// (D-Bus strings are also - like Rust strings - required to be valid UTF-8.)</span>
     <span class='ident'>Str</span>(<span class='ident'>String</span>),
     <span class='ident'>Bool</span>(<span class='ident'>bool</span>),
     <span class='ident'>Byte</span>(<span class='ident'>u8</span>),
@@ -1094,6 +1102,9 @@
     }
 
     <span class='doccomment'>/// Creates an MessageItem::Array from a list of MessageItems.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Note: This requires `v` to be non-empty. See also</span>
+    <span class='doccomment'>/// `MessageItem::from(&amp;[T])`, which can handle empty arrays as well.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_array</span>(<span class='ident'>v</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>MessageItem</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>MessageItem</span>,<span class='ident'>ArrayError</span><span class='op'>&gt;</span> {
         <span class='kw'>if</span> <span class='ident'>v</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
             <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ArrayError</span>::<span class='ident'>EmptyArray</span>);
@@ -1707,10 +1718,12 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -1727,7 +1740,7 @@
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -1747,7 +1760,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
@@ -1759,6 +1772,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>
