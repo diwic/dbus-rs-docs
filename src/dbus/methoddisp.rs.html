@@ -971,6 +971,60 @@
 <span id="928">928</span>
 <span id="929">929</span>
 <span id="930">930</span>
+<span id="931">931</span>
+<span id="932">932</span>
+<span id="933">933</span>
+<span id="934">934</span>
+<span id="935">935</span>
+<span id="936">936</span>
+<span id="937">937</span>
+<span id="938">938</span>
+<span id="939">939</span>
+<span id="940">940</span>
+<span id="941">941</span>
+<span id="942">942</span>
+<span id="943">943</span>
+<span id="944">944</span>
+<span id="945">945</span>
+<span id="946">946</span>
+<span id="947">947</span>
+<span id="948">948</span>
+<span id="949">949</span>
+<span id="950">950</span>
+<span id="951">951</span>
+<span id="952">952</span>
+<span id="953">953</span>
+<span id="954">954</span>
+<span id="955">955</span>
+<span id="956">956</span>
+<span id="957">957</span>
+<span id="958">958</span>
+<span id="959">959</span>
+<span id="960">960</span>
+<span id="961">961</span>
+<span id="962">962</span>
+<span id="963">963</span>
+<span id="964">964</span>
+<span id="965">965</span>
+<span id="966">966</span>
+<span id="967">967</span>
+<span id="968">968</span>
+<span id="969">969</span>
+<span id="970">970</span>
+<span id="971">971</span>
+<span id="972">972</span>
+<span id="973">973</span>
+<span id="974">974</span>
+<span id="975">975</span>
+<span id="976">976</span>
+<span id="977">977</span>
+<span id="978">978</span>
+<span id="979">979</span>
+<span id="980">980</span>
+<span id="981">981</span>
+<span id="982">982</span>
+<span id="983">983</span>
+<span id="984">984</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 
@@ -981,16 +1035,18 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::{<span class='ident'>Arc</span>, <span class='ident'>Mutex</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>BTreeMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::<span class='ident'>CString</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::{<span class='ident'>CStr</span>, <span class='ident'>CString</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 
 <span class='kw'>type</span> <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>K</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>BTreeMap</span><span class='op'>&lt;</span><span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>K</span><span class='op'>&gt;</span>, <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;&gt;</span>;
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Argument</span>(<span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>Signature</span>);
+<span class='doccomment'>/// A D-Bus Argument.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Argument</span>(<span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>Signature</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>);
 
 <span class='kw'>impl</span> <span class='ident'>Argument</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>name</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>sig</span>: <span class='ident'>Signature</span>) <span class='op'>-&gt;</span> <span class='ident'>Argument</span> { <span class='ident'>Argument</span>(<span class='ident'>name</span>, <span class='ident'>sig</span>) }
+    <span class='doccomment'>/// Create a new Argument.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>name</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>sig</span>: <span class='ident'>Signature</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Argument</span> { <span class='ident'>Argument</span>(<span class='ident'>name</span>, <span class='ident'>sig</span>) }
 
     <span class='kw'>fn</span> <span class='ident'>introspect</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>indent</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>dir</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> { 
         <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>n</span><span class='op'>|</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;name=\&quot;{}\&quot; &quot;</span>, <span class='ident'>n</span>)).<span class='ident'>unwrap_or</span>(<span class='string'>&quot;&quot;</span>.<span class='ident'>into</span>());
@@ -1004,46 +1060,54 @@
 <span class='comment'>// Doesn&#39;t work, conflicting impls</span>
 <span class='comment'>// impl&lt;S: Into&lt;Signature&gt;&gt; From&lt;S&gt; for Argument</span>
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Signature</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Argument</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>t</span>: <span class='ident'>Signature</span>) <span class='op'>-&gt;</span> <span class='ident'>Argument</span> { <span class='ident'>Argument</span>(<span class='prelude-val'>None</span>, <span class='ident'>t</span>) }
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Signature</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Argument</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>t</span>: <span class='ident'>Signature</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Argument</span> { <span class='ident'>Argument</span>(<span class='prelude-val'>None</span>, <span class='ident'>t</span>) }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Argument</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Argument</span> { <span class='ident'>Argument</span>(<span class='prelude-val'>None</span>, <span class='ident'>t</span>.<span class='ident'>into</span>()) }
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Argument</span> { <span class='ident'>Argument</span>(<span class='prelude-val'>None</span>, <span class='ident'>String</span>::<span class='ident'>from</span>(<span class='ident'>t</span>).<span class='ident'>into</span>()) }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Signature</span><span class='op'>&gt;&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span>(<span class='ident'>N</span>, <span class='ident'>S</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Argument</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Signature</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span>(<span class='ident'>N</span>, <span class='ident'>S</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Argument</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>((<span class='ident'>n</span>, <span class='ident'>s</span>): (<span class='ident'>N</span>, <span class='ident'>S</span>)) <span class='op'>-&gt;</span> <span class='ident'>Argument</span> { <span class='ident'>Argument</span>(<span class='prelude-val'>Some</span>(<span class='ident'>n</span>.<span class='ident'>into</span>()), <span class='ident'>s</span>.<span class='ident'>into</span>()) }
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MethodErr</span>(<span class='ident'>ErrorName</span>, <span class='ident'>String</span>);
+<span class='doccomment'>/// A D-Bus Method Error.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MethodErr</span>(<span class='ident'>ErrorName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>, <span class='ident'>String</span>);
 
 <span class='kw'>impl</span> <span class='ident'>MethodErr</span> {
+    <span class='doccomment'>/// Create an Invalid Args MethodErr.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>invalid_arg</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>fmt</span>::<span class='ident'>Debug</span><span class='op'>&gt;</span>(<span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodErr</span> {
         (<span class='string'>&quot;org.freedesktop.DBus.Error.InvalidArgs&quot;</span>, <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Invalid argument {:?}&quot;</span>, <span class='ident'>a</span>)).<span class='ident'>into</span>()
     }
+    <span class='doccomment'>/// Create a MethodErr that there are not enough arguments given.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>no_arg</span>() <span class='op'>-&gt;</span> <span class='ident'>MethodErr</span> {
         (<span class='string'>&quot;org.freedesktop.DBus.Error.InvalidArgs&quot;</span>, <span class='string'>&quot;Not enough arguments&quot;</span>).<span class='ident'>into</span>()
     }
+    <span class='doccomment'>/// Create a MethodErr that the method failed in the way specified.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>failed</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>fmt</span>::<span class='ident'>Display</span><span class='op'>&gt;</span>(<span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodErr</span> {
         (<span class='string'>&quot;org.freedesktop.DBus.Error.Failed&quot;</span>, <span class='ident'>a</span>.<span class='ident'>to_string</span>()).<span class='ident'>into</span>()
     }
+    <span class='doccomment'>/// Create a MethodErr that the Interface was unknown.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>no_interface</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>fmt</span>::<span class='ident'>Display</span><span class='op'>&gt;</span>(<span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodErr</span> {
         (<span class='string'>&quot;org.freedesktop.DBus.Error.UnknownInterface&quot;</span>, <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Unknown interface {}&quot;</span>, <span class='ident'>a</span>)).<span class='ident'>into</span>()
     }
+    <span class='doccomment'>/// Create a MethodErr that the Property was unknown.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>no_property</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>fmt</span>::<span class='ident'>Display</span><span class='op'>&gt;</span>(<span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodErr</span> {
         (<span class='string'>&quot;org.freedesktop.DBus.Error.UnknownProperty&quot;</span>, <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Unknown property {}&quot;</span>, <span class='ident'>a</span>)).<span class='ident'>into</span>()
     }
+    <span class='doccomment'>/// Create a MethodErr that the Property was read-only.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ro_property</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>fmt</span>::<span class='ident'>Display</span><span class='op'>&gt;</span>(<span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodErr</span> {
         (<span class='string'>&quot;org.freedesktop.DBus.Error.PropertyReadOnly&quot;</span>, <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Property {} is read only&quot;</span>, <span class='ident'>a</span>)).<span class='ident'>into</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>ErrorName</span><span class='op'>&gt;</span>, <span class='ident'>M</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span>(<span class='ident'>T</span>, <span class='ident'>M</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MethodErr</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>ErrorName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span>, <span class='ident'>M</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span>(<span class='ident'>T</span>, <span class='ident'>M</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MethodErr</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>((<span class='ident'>t</span>, <span class='ident'>m</span>): (<span class='ident'>T</span>, <span class='ident'>M</span>)) <span class='op'>-&gt;</span> <span class='ident'>MethodErr</span> { <span class='ident'>MethodErr</span>(<span class='ident'>t</span>.<span class='ident'>into</span>(), <span class='ident'>m</span>.<span class='ident'>into</span>()) }
 }
 
+<span class='doccomment'>/// Result containing the Messages returned from the Method, or a MethodErr.</span>
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>MethodResult</span> <span class='op'>=</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Message</span><span class='op'>&gt;</span>, <span class='ident'>MethodErr</span><span class='op'>&gt;</span>;
 
 <span class='doccomment'>/// A MethodType that wraps an Fn function</span>
@@ -1103,26 +1167,31 @@
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
+<span class='doccomment'>/// A D-Bus Method.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Method</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='ident'>cb</span>: <span class='ident'>M</span>,
-    <span class='ident'>name</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&gt;</span>,
+    <span class='ident'>name</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span>,
     <span class='ident'>i_args</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;</span>,
     <span class='ident'>o_args</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;</span>,
     <span class='ident'>anns</span>: <span class='ident'>BTreeMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>Method</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Builder method that adds an &quot;in&quot; Argument to this Method.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>in_arg</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>a</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> { <span class='self'>self</span>.<span class='ident'>i_args</span>.<span class='ident'>push</span>(<span class='ident'>a</span>.<span class='ident'>into</span>()); <span class='self'>self</span> }
+    <span class='doccomment'>/// Builder method that adds multiple &quot;in&quot; Arguments to this Method.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>in_args</span><span class='op'>&lt;</span><span class='ident'>Z</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;</span>, <span class='ident'>A</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>Z</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>a</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>i_args</span>.<span class='ident'>extend</span>(<span class='ident'>a</span>.<span class='ident'>into_iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span> <span class='ident'>b</span>.<span class='ident'>into</span>())); <span class='self'>self</span>
     }
 
+    <span class='doccomment'>/// Builder method that adds an &quot;out&quot; Argument to this Method.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>out_arg</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>a</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> { <span class='self'>self</span>.<span class='ident'>o_args</span>.<span class='ident'>push</span>(<span class='ident'>a</span>.<span class='ident'>into</span>()); <span class='self'>self</span> }
+    <span class='doccomment'>/// Builder method that adds multiple &quot;out&quot; Arguments to this Method.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>out_args</span><span class='op'>&lt;</span><span class='ident'>Z</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;</span>, <span class='ident'>A</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>Z</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>a</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>o_args</span>.<span class='ident'>extend</span>(<span class='ident'>a</span>.<span class='ident'>into_iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span> <span class='ident'>b</span>.<span class='ident'>into</span>())); <span class='self'>self</span>
     }
 
-    <span class='doccomment'>/// Add an annotation to the method</span>
+    <span class='doccomment'>/// Add an annotation to the method.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>annotate</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>N</span>, <span class='ident'>value</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>anns</span>.<span class='ident'>insert</span>(<span class='ident'>name</span>.<span class='ident'>into</span>(), <span class='ident'>value</span>.<span class='ident'>into</span>()); <span class='self'>self</span>
     }
@@ -1131,17 +1200,19 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>MethodType</span><span class='op'>&gt;</span> <span class='ident'>Method</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Call the Method.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>call</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='ident'>o</span>: <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>, <span class='ident'>i</span>: <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span> { <span class='self'>self</span>.<span class='ident'>cb</span>.<span class='ident'>call_method</span>(<span class='ident'>m</span>, <span class='ident'>o</span>, <span class='ident'>i</span>) }
 
-    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>n</span>: <span class='ident'>Member</span>, <span class='ident'>cb</span>: <span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> { <span class='ident'>Method</span> { <span class='ident'>name</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>n</span>), <span class='ident'>i_args</span>: <span class='macro'>vec</span><span class='macro'>!</span>(), <span class='ident'>o_args</span>: <span class='macro'>vec</span><span class='macro'>!</span>(), <span class='ident'>anns</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>(), <span class='ident'>cb</span>: <span class='ident'>cb</span> } }
+    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>n</span>: <span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>, <span class='ident'>cb</span>: <span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> { <span class='ident'>Method</span> { <span class='ident'>name</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>n</span>), <span class='ident'>i_args</span>: <span class='macro'>vec</span><span class='macro'>!</span>(), <span class='ident'>o_args</span>: <span class='macro'>vec</span><span class='macro'>!</span>(), <span class='ident'>anns</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>(), <span class='ident'>cb</span>: <span class='ident'>cb</span> } }
 }
 
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
+<span class='doccomment'>/// Represents a D-Bus interface.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='ident'>name</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&gt;</span>,
-    <span class='ident'>methods</span>: <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>Member</span>, <span class='ident'>Method</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>signals</span>: <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>Member</span>, <span class='ident'>Signal</span><span class='op'>&gt;</span>,
+    <span class='ident'>name</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span>,
+    <span class='ident'>methods</span>: <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>, <span class='ident'>Method</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>,
+    <span class='ident'>signals</span>: <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>, <span class='ident'>Signal</span><span class='op'>&gt;</span>,
     <span class='ident'>properties</span>: <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>,
     <span class='ident'>anns</span>: <span class='ident'>BTreeMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
 }
@@ -1169,13 +1240,14 @@
         <span class='ident'>p</span>
     }
 
+    <span class='doccomment'>/// Add an annotation to this Inteface.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>annotate</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>N</span>, <span class='ident'>value</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>anns</span>.<span class='ident'>insert</span>(<span class='ident'>name</span>.<span class='ident'>into</span>(), <span class='ident'>value</span>.<span class='ident'>into</span>()); <span class='self'>self</span>
     }
     <span class='doccomment'>/// Add an annotation that this entity is deprecated.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deprecated</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> { <span class='self'>self</span>.<span class='ident'>annotate</span>(<span class='string'>&quot;org.freedesktop.DBus.Deprecated&quot;</span>, <span class='string'>&quot;true&quot;</span>) }
 
-    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>t</span>: <span class='ident'>IfaceName</span>) <span class='op'>-&gt;</span> <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>t</span>: <span class='ident'>IfaceName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
         <span class='ident'>Interface</span> { <span class='ident'>name</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>t</span>), <span class='ident'>methods</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>(), <span class='ident'>signals</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>(),
             <span class='ident'>properties</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>(), <span class='ident'>anns</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>()
         }
@@ -1184,17 +1256,27 @@
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Ord</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Debug</span>)]</span>
+<span class='doccomment'>/// Enumerates the different signaling behaviors a Property can have</span>
+<span class='doccomment'>/// to being changed.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>EmitsChangedSignal</span> {
+    <span class='doccomment'>/// The Property emits a signal that includes the new value.</span>
     <span class='ident'>True</span>,
+    <span class='doccomment'>/// The Property emits a signal that does not include the new value.</span>
     <span class='ident'>Invalidates</span>,
+    <span class='doccomment'>/// The Property cannot be changed.</span>
     <span class='ident'>Const</span>,
+    <span class='doccomment'>/// The Property does not emit a signal when changed.</span>
     <span class='ident'>False</span>,
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Ord</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Debug</span>)]</span>
+<span class='doccomment'>/// The possible access characteristics a Property can have.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Access</span> {
+    <span class='doccomment'>/// The Property can only be read (Get).</span>
     <span class='ident'>Read</span>,
+    <span class='doccomment'>/// The Property can be read or written.</span>
     <span class='ident'>ReadWrite</span>,
+    <span class='doccomment'>/// The Property can only be written (Set).</span>
     <span class='ident'>Write</span>,
 }
 
@@ -1209,21 +1291,24 @@
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
+<span class='doccomment'>/// A D-Bus Property.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='ident'>name</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
     <span class='ident'>value</span>: <span class='ident'>Mutex</span><span class='op'>&lt;</span><span class='ident'>MessageItem</span><span class='op'>&gt;</span>,
     <span class='ident'>emits</span>: <span class='ident'>EmitsChangedSignal</span>,
     <span class='ident'>rw</span>: <span class='ident'>Access</span>,
     <span class='ident'>set_cb</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>,
-    <span class='ident'>owner</span>: <span class='ident'>Mutex</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;</span>, <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&gt;</span>)<span class='op'>&gt;&gt;</span>,
+    <span class='ident'>owner</span>: <span class='ident'>Mutex</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span>, <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span>)<span class='op'>&gt;&gt;</span>,
     <span class='ident'>anns</span>: <span class='ident'>BTreeMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>MethodType</span><span class='op'>&gt;</span> <span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Gets the value of the Property.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_value</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MessageItem</span> {
         <span class='self'>self</span>.<span class='ident'>value</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>().<span class='ident'>clone</span>()
     }
 
+    <span class='doccomment'>/// Gets the signal (if any) associated with the Property.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_signal</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Message</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>owner</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>().<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>p</span>, <span class='kw-2'>ref</span> <span class='ident'>i</span>)<span class='op'>|</span> {
             <span class='ident'>Message</span>::<span class='ident'>signal</span>(<span class='kw-2'>&amp;</span><span class='ident'>p</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;org.freedesktop.DBus.Properties&quot;</span>.<span class='ident'>into</span>(), <span class='kw-2'>&amp;</span><span class='string'>&quot;PropertiesChanged&quot;</span>.<span class='ident'>into</span>())
@@ -1231,8 +1316,9 @@
         })
     }
 
-    <span class='doccomment'>/// Returns error if &quot;emits&quot; is &quot;Const&quot;, and the property is in a tree.</span>
-    <span class='doccomment'>/// Returns messages to be sent over a connection, this could be the PropertiesChanged signal.</span>
+    <span class='doccomment'>/// Returns error if &quot;emits&quot; is &quot;Const&quot;, and the property is in a</span>
+    <span class='doccomment'>/// tree.  Returns messages to be sent over a connection, this</span>
+    <span class='doccomment'>/// could be the PropertiesChanged signal.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_value</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='ident'>MessageItem</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Message</span><span class='op'>&gt;</span>,()<span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>ss</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>emits</span> {
             <span class='ident'>EmitsChangedSignal</span>::<span class='ident'>False</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
@@ -1252,18 +1338,23 @@
         <span class='prelude-val'>Ok</span>(<span class='ident'>ss</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>s</span>)).<span class='ident'>unwrap_or</span>(<span class='macro'>vec</span><span class='macro'>!</span>()))
     }
 
+    <span class='doccomment'>/// Builder method that allows setting the Property&#39;s signal</span>
+    <span class='doccomment'>/// behavior when changed.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>emits_changed</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>e</span>: <span class='ident'>EmitsChangedSignal</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>emits</span> <span class='op'>=</span> <span class='ident'>e</span>;
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>rw</span> <span class='op'>==</span> <span class='ident'>Access</span>::<span class='ident'>Read</span> <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>emits</span> <span class='op'>!=</span> <span class='ident'>EmitsChangedSignal</span>::<span class='ident'>Const</span>);
         <span class='self'>self</span>
     }
 
+    <span class='doccomment'>/// Builder method that allows setting the Property as readable,</span>
+    <span class='doccomment'>/// writable, or both.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>access</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>e</span>: <span class='ident'>Access</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>rw</span> <span class='op'>=</span> <span class='ident'>e</span>;
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>rw</span> <span class='op'>==</span> <span class='ident'>Access</span>::<span class='ident'>Read</span> <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>emits</span> <span class='op'>!=</span> <span class='ident'>EmitsChangedSignal</span>::<span class='ident'>Const</span>);
         <span class='self'>self</span>
     }
 
+    <span class='doccomment'>/// Helper method to check accessibility before getting a value.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remote_get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, _: <span class='kw-2'>&amp;</span><span class='ident'>Message</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>MessageItem</span>, <span class='ident'>MethodErr</span><span class='op'>&gt;</span> {
         <span class='comment'>// TODO: We should be able to call a user-defined callback here instead...</span>
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>rw</span> <span class='op'>==</span> <span class='ident'>Access</span>::<span class='ident'>Write</span> { <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>MethodErr</span>::<span class='ident'>failed</span>(<span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Property {} is write only&quot;</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>name</span>))) }
@@ -1293,9 +1384,11 @@
         }
     }
 
+    <span class='doccomment'>/// Add an annotation to this Property.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>annotate</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>N</span>, <span class='ident'>value</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>anns</span>.<span class='ident'>insert</span>(<span class='ident'>name</span>.<span class='ident'>into</span>(), <span class='ident'>value</span>.<span class='ident'>into</span>()); <span class='self'>self</span>
     }
+
     <span class='doccomment'>/// Add an annotation that this entity is deprecated.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deprecated</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> { <span class='self'>self</span>.<span class='ident'>annotate</span>(<span class='string'>&quot;org.freedesktop.DBus.Deprecated&quot;</span>, <span class='string'>&quot;true&quot;</span>) }
 
@@ -1340,10 +1433,11 @@
 
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
+<span class='doccomment'>/// A D-Bus Signal.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Signal</span> {
-    <span class='ident'>name</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&gt;</span>,
+    <span class='ident'>name</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span>,
     <span class='ident'>arguments</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;</span>,
-    <span class='ident'>owner</span>: <span class='ident'>Mutex</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;</span>, <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&gt;</span>)<span class='op'>&gt;&gt;</span>,
+    <span class='ident'>owner</span>: <span class='ident'>Mutex</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span>, <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span>)<span class='op'>&gt;&gt;</span>,
     <span class='ident'>anns</span>: <span class='ident'>BTreeMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
 }
 
@@ -1360,11 +1454,14 @@
         <span class='ident'>m</span>
     }
 
+    <span class='doccomment'>/// Builder method that adds an Argument to the Signal.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>arg</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>a</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> { <span class='self'>self</span>.<span class='ident'>arguments</span>.<span class='ident'>push</span>(<span class='ident'>a</span>.<span class='ident'>into</span>()); <span class='self'>self</span> }
+    <span class='doccomment'>/// Builder method that adds multiple &quot;rguments to the Signel.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>args</span><span class='op'>&lt;</span><span class='ident'>Z</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;</span>, <span class='ident'>A</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>Z</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>a</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>arguments</span>.<span class='ident'>extend</span>(<span class='ident'>a</span>.<span class='ident'>into_iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span> <span class='ident'>b</span>.<span class='ident'>into</span>())); <span class='self'>self</span>
     }
 
+    <span class='doccomment'>/// Add an annotation to this Signal.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>annotate</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>N</span>, <span class='ident'>value</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>anns</span>.<span class='ident'>insert</span>(<span class='ident'>name</span>.<span class='ident'>into</span>(), <span class='ident'>value</span>.<span class='ident'>into</span>()); <span class='self'>self</span>
     }
@@ -1393,49 +1490,46 @@
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
+<span class='doccomment'>/// A D-Bus Object Path.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='ident'>name</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;</span>,
-    <span class='ident'>ifaces</span>: <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span>, <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>,
+    <span class='ident'>name</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span>,
+    <span class='ident'>ifaces</span>: <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>, <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>,
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>MethodType</span><span class='op'>&gt;</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>p</span>: <span class='ident'>Path</span>) <span class='op'>-&gt;</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>p</span>: <span class='ident'>Path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
         <span class='ident'>ObjectPath</span> { <span class='ident'>name</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>p</span>), <span class='ident'>ifaces</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>() }
     }
 
+    <span class='kw'>fn</span> <span class='ident'>get_iface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CStr</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>, <span class='ident'>MethodErr</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='ident'>iface_name</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>i</span>.<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='number'>0</span>)));
+        <span class='kw'>let</span> <span class='ident'>j</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>IfaceName</span>::<span class='ident'>from_slice</span>(<span class='ident'>iface_name</span>.<span class='ident'>to_bytes_with_nul</span>()).<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>e</span>)));
+        <span class='self'>self</span>.<span class='ident'>ifaces</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>j</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_interface</span>(<span class='kw-2'>&amp;</span><span class='ident'>j</span>))
+    }
+
     <span class='kw'>fn</span> <span class='ident'>prop_set</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='ident'>o</span>: <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span> {
-        <span class='kw'>let</span> <span class='ident'>items</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>get_items</span>();
-        <span class='kw'>let</span> <span class='ident'>iface_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>String</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>items</span>.<span class='ident'>get</span>(<span class='number'>0</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_arg</span>())
-            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span>.<span class='ident'>inner</span>().<span class='ident'>map_err</span>(<span class='op'>|</span>_<span class='op'>|</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>))));
-        <span class='kw'>let</span> <span class='ident'>prop_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>String</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>items</span>.<span class='ident'>get</span>(<span class='number'>1</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_arg</span>())
-            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span>.<span class='ident'>inner</span>().<span class='ident'>map_err</span>(<span class='op'>|</span>_<span class='op'>|</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>))));
-        <span class='kw'>let</span> <span class='ident'>iface</span>: <span class='kw-2'>&amp;</span><span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>IfaceName</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='op'>*</span><span class='ident'>iface_name</span>).<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>e</span>))
-            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>ifaces</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_interface</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>))));
-        <span class='kw'>let</span> <span class='ident'>prop</span>: <span class='kw-2'>&amp;</span><span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>iface</span>.<span class='ident'>properties</span>.<span class='ident'>get</span>(<span class='ident'>prop_name</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_property</span>(<span class='ident'>prop_name</span>)));
+        <span class='kw'>let</span> (<span class='ident'>iname</span>, <span class='ident'>p</span>) <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>get2</span>();
+        <span class='kw'>let</span> <span class='ident'>iface</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>get_iface</span>(<span class='ident'>iname</span>));
+        <span class='kw'>let</span> <span class='ident'>prop_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>p</span>.<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='number'>1</span>)));
+        <span class='kw'>let</span> <span class='ident'>prop</span>: <span class='kw-2'>&amp;</span><span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>iface</span>.<span class='ident'>properties</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>String</span>::<span class='ident'>from</span>(<span class='ident'>prop_name</span>))
+            .<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_property</span>(<span class='kw-2'>&amp;</span><span class='ident'>prop_name</span>)));
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>prop</span>.<span class='ident'>remote_set</span>(<span class='ident'>m</span>, <span class='ident'>o</span>, <span class='ident'>t</span>));
         <span class='ident'>r</span>.<span class='ident'>push</span>(<span class='ident'>m</span>.<span class='ident'>method_return</span>());
         <span class='prelude-val'>Ok</span>(<span class='ident'>r</span>)
     }
 
     <span class='kw'>fn</span> <span class='ident'>prop_get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Message</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span> {
-        <span class='kw'>let</span> <span class='ident'>items</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>get_items</span>();
-        <span class='kw'>let</span> <span class='ident'>iface_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>String</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>items</span>.<span class='ident'>get</span>(<span class='number'>0</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_arg</span>())
-            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span>.<span class='ident'>inner</span>().<span class='ident'>map_err</span>(<span class='op'>|</span>_<span class='op'>|</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>))));
-        <span class='kw'>let</span> <span class='ident'>prop_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>String</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>items</span>.<span class='ident'>get</span>(<span class='number'>1</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_arg</span>())
-            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span>.<span class='ident'>inner</span>().<span class='ident'>map_err</span>(<span class='op'>|</span>_<span class='op'>|</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>))));
-        <span class='kw'>let</span> <span class='ident'>iface</span>: <span class='kw-2'>&amp;</span><span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>IfaceName</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='op'>*</span><span class='ident'>iface_name</span>).<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>e</span>))
-            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>ifaces</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_interface</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>))));
-        <span class='kw'>let</span> <span class='ident'>prop</span>: <span class='kw-2'>&amp;</span><span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>iface</span>.<span class='ident'>properties</span>.<span class='ident'>get</span>(<span class='ident'>prop_name</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_property</span>(<span class='ident'>prop_name</span>)));
+        <span class='kw'>let</span> (<span class='ident'>iname</span>, <span class='ident'>p</span>) <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>get2</span>();
+        <span class='kw'>let</span> <span class='ident'>iface</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>get_iface</span>(<span class='ident'>iname</span>));
+        <span class='kw'>let</span> <span class='ident'>prop_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>p</span>.<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='number'>1</span>)));
+        <span class='kw'>let</span> <span class='ident'>prop</span>: <span class='kw-2'>&amp;</span><span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>iface</span>.<span class='ident'>properties</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>String</span>::<span class='ident'>from</span>(<span class='ident'>prop_name</span>))
+            .<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_property</span>(<span class='kw-2'>&amp;</span><span class='ident'>prop_name</span>)));
         <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>prop</span>.<span class='ident'>remote_get</span>(<span class='ident'>m</span>));
         <span class='prelude-val'>Ok</span>(<span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>m</span>.<span class='ident'>method_return</span>().<span class='ident'>append</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>r</span>))))
     }
 
     <span class='kw'>fn</span> <span class='ident'>prop_get_all</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Message</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span> {
-        <span class='kw'>let</span> <span class='ident'>items</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>get_items</span>();
-        <span class='kw'>let</span> <span class='ident'>iface_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>String</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>items</span>.<span class='ident'>get</span>(<span class='number'>0</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_arg</span>())
-            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span>.<span class='ident'>inner</span>().<span class='ident'>map_err</span>(<span class='op'>|</span>_<span class='op'>|</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>))));
-        <span class='kw'>let</span> <span class='ident'>iface</span>: <span class='kw-2'>&amp;</span><span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>IfaceName</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='op'>*</span><span class='ident'>iface_name</span>).<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>MethodErr</span>::<span class='ident'>invalid_arg</span>(<span class='kw-2'>&amp;</span><span class='ident'>e</span>))
-            .<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>ifaces</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>).<span class='ident'>ok_or_else</span>(<span class='op'>||</span> <span class='ident'>MethodErr</span>::<span class='ident'>no_interface</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>))));
+        <span class='kw'>let</span> <span class='ident'>iface</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>get_iface</span>(<span class='ident'>m</span>.<span class='ident'>get1</span>()));
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>q</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>MessageItem</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>();
         <span class='kw'>for</span> <span class='ident'>v</span> <span class='kw'>in</span> <span class='ident'>iface</span>.<span class='ident'>properties</span>.<span class='ident'>values</span>() {
              <span class='ident'>q</span>.<span class='ident'>push</span>(((<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='op'>*</span><span class='ident'>v</span>.<span class='ident'>name</span>).<span class='ident'>into</span>(), <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>v</span>.<span class='ident'>remote_get</span>(<span class='ident'>m</span>))).<span class='ident'>into</span>())
@@ -1457,6 +1551,7 @@
         <span class='self'>self</span>.<span class='ident'>ifaces</span>.<span class='ident'>insert</span>(<span class='ident'>i</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>i</span>));
     }
 
+    <span class='doccomment'>/// Add an Interface to this Object Path.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>p</span>: <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='kw'>for</span> <span class='ident'>s</span> <span class='kw'>in</span> <span class='ident'>p</span>.<span class='ident'>signals</span>.<span class='ident'>values</span>() {
             <span class='op'>*</span><span class='ident'>s</span>.<span class='ident'>owner</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>() <span class='op'>=</span> <span class='prelude-val'>Some</span>((<span class='self'>self</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>p</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>()))
@@ -1578,7 +1673,7 @@
 <span class='doccomment'>/// A collection of object paths.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='ident'>paths</span>: <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>Path</span>, <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>
+    <span class='ident'>paths</span>: <span class='ident'>ArcMap</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>, <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>MethodType</span><span class='op'>&gt;</span> <span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
@@ -1595,6 +1690,7 @@
         }).<span class='ident'>collect</span>()
     }
 
+    <span class='doccomment'>/// Add a Object Path to this Tree.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>p</span>: <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>paths</span>.<span class='ident'>insert</span>(<span class='ident'>p</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>p</span>));
         <span class='self'>self</span>
@@ -1657,19 +1753,23 @@
 
     <span class='doccomment'>/// Creates a new method for single-thread use.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>method</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>H</span>: <span class='lifetime'>&#39;b</span>, <span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='op'>-&gt;</span> <span class='ident'>Method</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>, <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&gt;</span> {
+    <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>, <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span> {
         <span class='ident'>Method</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>(), <span class='ident'>MethodFn</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>handler</span>)))
     }
 
+    <span class='doccomment'>/// Creates a new property for single-thread use.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>property</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>I</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>MessageItem</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>, <span class='ident'>i</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> {
         <span class='ident'>Property</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>(), <span class='ident'>i</span>.<span class='ident'>into</span>())
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>Interface</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
+    <span class='doccomment'>/// Creates a new interface for single-thread use.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>Interface</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
 
+    <span class='doccomment'>/// Creates a new tree for single-thread use.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tree</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>Tree</span> { <span class='ident'>paths</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>() }}
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>object_path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>ObjectPath</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
+    <span class='doccomment'>/// Creates a new object path for single-thread use.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>object_path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodFn</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>ObjectPath</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Factory</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> {
@@ -1681,23 +1781,27 @@
     <span class='doccomment'>/// This method can mutate its environment, so it will panic in case</span>
     <span class='doccomment'>/// it is called recursively.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>method</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>H</span>: <span class='lifetime'>&#39;b</span>, <span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='op'>-&gt;</span> <span class='ident'>Method</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>, <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&gt;</span> {
+    <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>, <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span> {
         <span class='ident'>Method</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>(), <span class='ident'>MethodFnMut</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>RefCell</span>::<span class='ident'>new</span>(<span class='ident'>handler</span>))))
     }
 
+    <span class='doccomment'>/// Creates a new mutable property for single-thread use.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>property</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>I</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>MessageItem</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>, <span class='ident'>i</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> {
         <span class='ident'>Property</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>(), <span class='ident'>i</span>.<span class='ident'>into</span>())
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>Interface</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
+    <span class='doccomment'>/// Creates a new mutable interface for single-thread use.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>Interface</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
 
+    <span class='doccomment'>/// Creates a new mutable tree for single-thread use.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tree</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>Tree</span> { <span class='ident'>paths</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>() }}
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>object_path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>ObjectPath</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
+    <span class='doccomment'>/// Creates a new mutable object path for single-thread use.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>object_path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodFnMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> { <span class='ident'>ObjectPath</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
 }
 
 <span class='kw'>impl</span> <span class='ident'>Factory</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span> {
-    
+
     <span class='doccomment'>/// Creates a new factory for multi-thread use.</span>
     <span class='doccomment'>/// Trees created will be able to Send and Sync, i e,</span>
     <span class='doccomment'>/// it can handle several messages in parallel.</span>
@@ -1707,23 +1811,28 @@
     <span class='doccomment'>/// This puts bounds on the callback to enable it to be called from several threads</span>
     <span class='doccomment'>/// in parallel.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>method</span><span class='op'>&lt;</span><span class='ident'>H</span>, <span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='op'>-&gt;</span> <span class='ident'>Method</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span>, <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&gt;</span> {
+    <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span>, <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span> {
         <span class='ident'>Method</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>(), <span class='ident'>MethodSync</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>handler</span>)))
     }
 
+    <span class='doccomment'>/// Creates a new property for multi-threaded use.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>property</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>I</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>MessageItem</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>, <span class='ident'>i</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='ident'>Property</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span> {
         <span class='ident'>Property</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>(), <span class='ident'>i</span>.<span class='ident'>into</span>())
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interface</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span> { <span class='ident'>Interface</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
+    <span class='doccomment'>/// Creates a new interface for multi-threaded use.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interface</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>IfaceName</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Interface</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span> { <span class='ident'>Interface</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
 
+    <span class='doccomment'>/// Creates a new tree for multi-threaded use.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tree</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span> { <span class='ident'>Tree</span> { <span class='ident'>paths</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>() }}
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>object_path</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span> { <span class='ident'>ObjectPath</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
+    <span class='doccomment'>/// Creates a new object path for multi-threaded use.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>object_path</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>MethodSync</span><span class='op'>&gt;</span> { <span class='ident'>ObjectPath</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()) }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>Factory</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>signal</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Signal</span> {
+    <span class='doccomment'>/// Create a Signal.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>signal</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Signal</span> {
         <span class='ident'>Signal</span> { <span class='ident'>name</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>()), <span class='ident'>arguments</span>: <span class='macro'>vec</span><span class='macro'>!</span>(), <span class='ident'>owner</span>: <span class='ident'>Mutex</span>::<span class='ident'>new</span>(<span class='prelude-val'>None</span>), <span class='ident'>anns</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>() }
     }
 }
@@ -1731,7 +1840,7 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>MethodType</span><span class='op'>&gt;</span> <span class='ident'>Factory</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a new method with bounds enough to be used in all trees.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>method_sync</span><span class='op'>&lt;</span><span class='ident'>H</span>, <span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='op'>-&gt;</span> <span class='ident'>Method</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>, <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&gt;</span> {
+    <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>Message</span>, <span class='kw-2'>&amp;</span><span class='ident'>ObjectPath</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>, <span class='kw-2'>&amp;</span><span class='ident'>Tree</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MethodResult</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Member</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span> {
         <span class='ident'>Method</span>::<span class='ident'>new</span>(<span class='ident'>t</span>.<span class='ident'>into</span>(), <span class='ident'>M</span>::<span class='ident'>box_method</span>(<span class='ident'>handler</span>))
     }
 }
@@ -1769,10 +1878,9 @@
     <span class='ident'>super</span>::<span class='ident'>message</span>::<span class='ident'>message_set_serial</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>msg</span>, <span class='number'>4</span>);
     <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>tree1</span>.<span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='ident'>msg</span>).<span class='ident'>unwrap</span>();
     <span class='kw'>let</span> <span class='ident'>r1</span> <span class='op'>=</span> <span class='ident'>r</span>.<span class='ident'>get</span>(<span class='number'>0</span>).<span class='ident'>unwrap</span>();
-    <span class='kw'>let</span> <span class='ident'>ii</span> <span class='op'>=</span> <span class='ident'>r1</span>.<span class='ident'>get_items</span>();
-    <span class='kw'>let</span> <span class='ident'>vv</span>: <span class='kw-2'>&amp;</span><span class='ident'>MessageItem</span> <span class='op'>=</span> <span class='ident'>ii</span>.<span class='ident'>get</span>(<span class='number'>0</span>).<span class='ident'>unwrap</span>().<span class='ident'>inner</span>().<span class='ident'>unwrap</span>();
-    <span class='kw'>let</span> <span class='ident'>v</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>vv</span>.<span class='ident'>inner</span>().<span class='ident'>unwrap</span>();
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>v</span> <span class='op'>==</span> <span class='number'>7</span> <span class='op'>||</span> <span class='ident'>v</span> <span class='op'>==</span> <span class='number'>9</span>);
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>r1</span>.<span class='ident'>get_items</span>());
+    <span class='kw'>let</span> <span class='ident'>vv</span>: <span class='ident'>super</span>::<span class='ident'>arg</span>::<span class='ident'>Variant</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>r1</span>.<span class='ident'>get1</span>().<span class='ident'>unwrap</span>();
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>vv</span>.<span class='number'>0</span> <span class='op'>==</span> <span class='number'>7</span> <span class='op'>||</span> <span class='ident'>vv</span>.<span class='number'>0</span> <span class='op'>==</span> <span class='number'>9</span>);
 }
 
 <span class='comment'>/* This test case no longer works, for unknown reason, see

@@ -273,6 +273,12 @@
 <span id="230">230</span>
 <span id="231">231</span>
 <span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
 
@@ -308,6 +314,7 @@
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>DBUS_TYPE_UNIX_FD</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='string'>&#39;h&#39;</span> <span class='kw'>as</span> <span class='ident'>c_int</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>DBUS_TYPE_STRUCT</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='string'>&#39;r&#39;</span> <span class='kw'>as</span> <span class='ident'>c_int</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>DBUS_TYPE_OBJECT_PATH</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='string'>&#39;o&#39;</span> <span class='kw'>as</span> <span class='ident'>c_int</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>DBUS_TYPE_SIGNATURE</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='string'>&#39;g&#39;</span> <span class='kw'>as</span> <span class='ident'>c_int</span>;
 
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
@@ -378,6 +385,7 @@
 }
 
 <span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>DBusMessageIter</span> {
     <span class='kw'>pub</span> <span class='ident'>dummy1</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
     <span class='kw'>pub</span> <span class='ident'>dummy2</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
@@ -477,10 +485,14 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_set_serial</span>(<span class='ident'>message</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessage</span>, <span class='ident'>serial</span>: <span class='ident'>u32</span>);
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_append_basic</span>(<span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>, <span class='ident'>t</span>: <span class='ident'>c_int</span>, <span class='ident'>value</span>: <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>c_void</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_append_fixed_array</span>(<span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>, <span class='ident'>element_type</span>: <span class='ident'>c_int</span>,
+        <span class='ident'>value</span>: <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>c_void</span>, <span class='ident'>n_elements</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_init</span>(<span class='ident'>message</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessage</span>, <span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_init_append</span>(<span class='ident'>message</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessage</span>, <span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>);
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_get_arg_type</span>(<span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_get_basic</span>(<span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>, <span class='ident'>value</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_get_fixed_array</span>(<span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>,
+        <span class='ident'>value</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>, <span class='ident'>n_elements</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_get_signature</span>(<span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>) <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_char</span>;
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_next</span>(<span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dbus_message_iter_recurse</span>(<span class='ident'>iter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>, <span class='ident'>subiter</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBusMessageIter</span>);

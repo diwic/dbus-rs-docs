@@ -608,6 +608,89 @@
 <span id="565">565</span>
 <span id="566">566</span>
 <span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! D-Bus bindings for Rust</span>
 <span class='doccomment'>//!</span>
@@ -617,6 +700,8 @@
 <span class='doccomment'>//! system-wide.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! See the examples directory for some examples to get you started.</span>
+
+<span class='comment'>// #![warn(missing_docs)]</span>
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
 
@@ -642,14 +727,86 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::<span class='ident'>io</span>::<span class='ident'>RawFd</span>;
 
+<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>ffi</span>;
 <span class='kw'>mod</span> <span class='ident'>message</span>;
 <span class='kw'>mod</span> <span class='ident'>prop</span>;
 <span class='kw'>mod</span> <span class='ident'>objpath</span>;
 <span class='kw'>mod</span> <span class='ident'>watch</span>;
+<span class='kw'>mod</span> <span class='ident'>msgarg</span>;
 
 <span class='kw'>mod</span> <span class='ident'>strings</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>strings</span>::{<span class='ident'>Signature</span>, <span class='ident'>Path</span>, <span class='ident'>Interface</span>, <span class='ident'>Member</span>, <span class='ident'>ErrorName</span>, <span class='ident'>BusName</span>};
+
+<span class='doccomment'>/// Types and traits for easily getting a message&#39;s arguments, or appening a message with arguments.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Using this module should be faster than</span>
+<span class='doccomment'>/// using MessageItem, especially when large arrays need to be appended.</span>
+<span class='doccomment'>/// It also encodes more of D-Bus restrictions into Rust&#39;s type system, so</span>
+<span class='doccomment'>/// trying to append anything that D-Bus would not allow should result in a</span>
+<span class='doccomment'>/// compile-time error.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// A message has `get1`, `get2` etc, and `append1`, `append2` etc, which is your</span>
+<span class='doccomment'>/// starting point into this module&#39;s types. </span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// **Append a**:</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `bool, u8, u16, u32, u64, i16, i32, i64, f64` - the corresponding D-Bus basic type</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `&amp;str` - a D-Bus string. D-Bus strings do not allow null characters, so </span>
+<span class='doccomment'>/// if the string contains null characters, it will be cropped</span>
+<span class='doccomment'>/// to only include the data before the null character. (Tip: This allows for skipping an</span>
+<span class='doccomment'>/// allocation by writing a string literal which ends with a null character.)</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `&amp;[T] where T: Append` - a D-Bus array. Note: can use an efficient fast-path in case of </span>
+<span class='doccomment'>/// T being an FixedArray type.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `Array&lt;T, I&gt; where T: Append, I: Iterator&lt;Item=T&gt;` - a D-Bus array, maximum flexibility.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `Variant&lt;T&gt; where T: Append` - a D-Bus variant.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `(T1, T2) where T1: Append, T2: Append` - tuples are D-Bus structs. Implemented up to 12.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `Dict&lt;K, V, I&gt; where K: Append + DictKey, V: Append, I: Iterator&lt;Item=(&amp;K, &amp;V)&gt;` - A D-Bus dict (array of dict entries).</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `ObjectPath` - a D-Bus object path.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `Signature` - a D-Bus signature.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `OwnedFd` - shares the file descriptor with the remote side.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// **Get a**:</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `bool, u8, u16, u32, u64, i16, i32, i64, f64` - the corresponding D-Bus basic type</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `&amp;str`, `&amp;CStr` - a D-Bus string. D-Bus strings are always UTF-8 and do not contain null characters.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `&amp;[T] where T: FixedArray` - a D-Bus array of integers or f64.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `Array&lt;T, Iter&gt; where T: Get` - a D-Bus array, maximum flexibility. Implements Iterator so you can easily</span>
+<span class='doccomment'>/// collect it into, e g, a `Vec`.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `Variant&lt;T&gt; where T: Get` - a D-Bus variant. Use this type of Variant if you know the inner type.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `Variant&lt;Iter&gt;` - a D-Bus variant. This type of Variant allows you to examine the inner type.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `(T1, T2) where T1: Get, T2: Get` - tuples are D-Bus structs. Implemented up to 12.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `Dict&lt;K, V, Iter&gt; where K: Get + DictKey, V: Get` - A D-Bus dict (array of dict entries). Implements Iterator so you can easily</span>
+<span class='doccomment'>/// collect it into, e g, a `HashMap`.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `ObjectPath` - a D-Bus object path.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `Signature` - a D-Bus signature.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// `OwnedFd` - a file descriptor sent from the remote side.</span>
+<span class='doccomment'>///</span>
+
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>arg</span> {
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>msgarg</span>::{<span class='ident'>Arg</span>, <span class='ident'>FixedArray</span>, <span class='ident'>Get</span>, <span class='ident'>DictKey</span>, <span class='ident'>Append</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>msgarg</span>::{<span class='ident'>Iter</span>, <span class='ident'>IterAppend</span>, <span class='ident'>Array</span>, <span class='ident'>Variant</span>, <span class='ident'>Dict</span>};
+}
+
 
 <span class='doccomment'>/// Contains functionality for the &quot;server&quot; of a D-Bus object. A remote application can</span>
 <span class='doccomment'>/// introspect this object and call methods on it.</span>
@@ -718,6 +875,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>Error</span> {
 
+    <span class='doccomment'>/// Create a new custom D-Bus Error.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_custom</span>(<span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>message</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Error</span> {
         <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>name</span>);
         <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='kw-2'>&amp;</span><span class='ident'>message</span>.<span class='ident'>replace</span>(<span class='string'>&quot;%&quot;</span>,<span class='string'>&quot;%%&quot;</span>));
@@ -931,6 +1089,7 @@
         <span class='prelude-val'>Ok</span>(<span class='ident'>serial</span>)
     }
 
+    <span class='doccomment'>/// Get the connection&#39;s unique name.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unique_name</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
         <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>dbus_bus_get_unique_name</span>(<span class='self'>self</span>.<span class='ident'>conn</span>()) };
         <span class='ident'>c_str_to_slice</span>(<span class='kw-2'>&amp;</span><span class='ident'>c</span>).<span class='ident'>unwrap_or</span>(<span class='string'>&quot;&quot;</span>).<span class='ident'>to_string</span>()
@@ -944,6 +1103,7 @@
         }
     }
 
+    <span class='doccomment'>/// Register an object path.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_object_path</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>Error</span>::<span class='ident'>empty</span>();
         <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>path</span>);
@@ -962,12 +1122,14 @@
         <span class='kw'>if</span> <span class='ident'>r</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) } <span class='kw'>else</span> { <span class='prelude-val'>Ok</span>(()) }
     }
 
+    <span class='doccomment'>/// Unregister an object path.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unregister_object_path</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
         <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>path</span>);
         <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>dbus_connection_unregister_object_path</span>(<span class='self'>self</span>.<span class='ident'>conn</span>(), <span class='ident'>p</span>.<span class='ident'>as_ptr</span>()) };
         <span class='kw'>if</span> <span class='ident'>r</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Out of memory&quot;</span>); }
     }
 
+    <span class='doccomment'>/// List registered object paths.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>list_registered_object_paths</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>path</span>);
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>clist</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>libc</span>::<span class='ident'>c_char</span> <span class='op'>=</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>();
@@ -988,6 +1150,7 @@
         <span class='ident'>v</span>
     }
 
+    <span class='doccomment'>/// Register a name.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_name</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>flags</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>RequestNameReply</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>Error</span>::<span class='ident'>empty</span>();
         <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>name</span>);
@@ -995,6 +1158,7 @@
         <span class='kw'>if</span> <span class='ident'>r</span> <span class='op'>==</span> <span class='op'>-</span><span class='number'>1</span> { <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) } <span class='kw'>else</span> { <span class='prelude-val'>Ok</span>(<span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='ident'>r</span>) }) }
     }
 
+    <span class='doccomment'>/// Release a name.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>release_name</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>ReleaseNameReply</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>Error</span>::<span class='ident'>empty</span>();
         <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>name</span>);
@@ -1002,6 +1166,7 @@
         <span class='kw'>if</span> <span class='ident'>r</span> <span class='op'>==</span> <span class='op'>-</span><span class='number'>1</span> { <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) } <span class='kw'>else</span> { <span class='prelude-val'>Ok</span>(<span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='ident'>r</span>) }) }
     }
 
+    <span class='doccomment'>/// Add a match rule to match messages on the message bus.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_match</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>rule</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>Error</span>::<span class='ident'>empty</span>();
         <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>rule</span>);
@@ -1009,6 +1174,7 @@
         <span class='kw'>if</span> <span class='ident'>e</span>.<span class='ident'>name</span>().<span class='ident'>is_some</span>() { <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) } <span class='kw'>else</span> { <span class='prelude-val'>Ok</span>(()) }
     }
 
+    <span class='doccomment'>/// Remove a match rule to match messages on the message bus.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remove_match</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>rule</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>Error</span>::<span class='ident'>empty</span>();
         <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>rule</span>);
@@ -1145,7 +1311,7 @@
                     <span class='kw'>let</span> (_, <span class='ident'>p</span>, <span class='ident'>i</span>, <span class='ident'>m</span>) <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>headers</span>();
                     <span class='kw'>match</span> (<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>p</span>.<span class='ident'>unwrap</span>(), <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>i</span>.<span class='ident'>unwrap</span>(), <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>m</span>.<span class='ident'>unwrap</span>()) {
                         (<span class='string'>&quot;/mysignal&quot;</span>, <span class='string'>&quot;com.example.signaltest&quot;</span>, <span class='string'>&quot;ThisIsASignal&quot;</span>) <span class='op'>=&gt;</span> {
-                            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>sender</span>().<span class='ident'>unwrap</span>(), <span class='ident'>uname</span>);
+                            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>s</span>.<span class='ident'>sender</span>().<span class='ident'>unwrap</span>(), <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>uname</span>);
                             <span class='kw'>break</span>;
                         },
                         (_, _, _) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Other signal: {:?}&quot;</span>, <span class='ident'>s</span>.<span class='ident'>headers</span>()),
