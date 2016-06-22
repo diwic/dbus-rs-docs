@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,10 +44,10 @@
 
     <section id='main' class="content type">
 <h1 class='fqn'><span class='in-band'><a href='../index.html'>dbus</a>::<wbr><a href='index.html'>obj</a>::<wbr><a class='type' href=''>MethodHandler</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-1673' class='srclink' href='../../src/dbus/objpath.rs.html#60' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1675' class='srclink' href='../../src/dbus/src/objpath.rs.html#60' title='goto source code'>[src]</a></span></h1>
 <pre class='rust typedef'>type MethodHandler&lt;'a&gt; = <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='core::ops::FnMut'>FnMut</a>(&amp;mut <a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>) -&gt; <a class='type' href='../../dbus/obj/type.MethodResult.html' title='dbus::obj::MethodResult'>MethodResult</a> + 'a&gt;;</pre><div class='docblock'><p>A boxed closure for dynamic dispatch. It is called when the method is
 called by a remote application.</p>
 </div></section>
@@ -92,7 +93,7 @@ called by a remote application.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

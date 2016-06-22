@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
+    
 
     
     
@@ -43,14 +44,15 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>dbus</a>::<wbr><a class='struct' href=''>Connection</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-5464' class='srclink' href='../src/dbus/lib.rs.html#303-305' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-5466' class='srclink' href='../src/dbus/src/lib.rs.html#315-317' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Connection {
     // some fields omitted
 }</pre><div class='docblock'><p>A D-Bus connection. Start here if you want to get on the D-Bus!</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a></code></h3><div class='impl-items'><h4 id='method.get_private' class='method'><code>fn <a href='#method.get_private' class='fnname'>get_private</a>(bus: <a class='enum' href='../dbus/enum.BusType.html' title='dbus::BusType'>BusType</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a>, <a class='struct' href='../dbus/struct.Error.html' title='dbus::Error'>Error</a>&gt;</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-5484' class='srclink' href='../src/dbus/src/lib.rs.html#352-523' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.get_private' class='method'><code>fn <a href='#method.get_private' class='fnname'>get_private</a>(bus: <a class='enum' href='../dbus/enum.BusType.html' title='dbus::BusType'>BusType</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a>, <a class='struct' href='../dbus/struct.Error.html' title='dbus::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Creates a new D-Bus connection.</p>
 </div><h4 id='method.send_with_reply_and_block' class='method'><code>fn <a href='#method.send_with_reply_and_block' class='fnname'>send_with_reply_and_block</a>(&amp;self, msg: <a class='struct' href='../dbus/struct.Message.html' title='dbus::Message'>Message</a>, timeout_ms: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../dbus/struct.Message.html' title='dbus::Message'>Message</a>, <a class='struct' href='../dbus/struct.Error.html' title='dbus::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Sends a message over the D-Bus and waits for a reply.
@@ -73,16 +75,25 @@ This is usually used for method calls.</p>
 <div class='docblock'><p>Release a name.</p>
 </div><h4 id='method.add_match' class='method'><code>fn <a href='#method.add_match' class='fnname'>add_match</a>(&amp;self, rule: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='../dbus/struct.Error.html' title='dbus::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Add a match rule to match messages on the message bus.</p>
+
+<p>See the <code>unity_focused_window</code> example for how to use this to catch signals.
+(The syntax of the &quot;rule&quot; string is specified in the <a href="https://dbus.freedesktop.org/doc/dbus-specification.html#message-bus-routing-match-rules">D-Bus specification</a>.)</p>
 </div><h4 id='method.remove_match' class='method'><code>fn <a href='#method.remove_match' class='fnname'>remove_match</a>(&amp;self, rule: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='../dbus/struct.Error.html' title='dbus::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Remove a match rule to match messages on the message bus.</p>
 </div><h4 id='method.watch_fds' class='method'><code>fn <a href='#method.watch_fds' class='fnname'>watch_fds</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../dbus/struct.Watch.html' title='dbus::Watch'>Watch</a>&gt;</code></h4>
 <div class='docblock'><p>Async I/O: Get an up-to-date list of file descriptors to watch.</p>
-</div><h4 id='method.watch_handle' class='method'><code>fn <a href='#method.watch_handle' class='fnname'>watch_handle</a>(&amp;self, fd: <a class='type' href='https://doc.rust-lang.org/nightly/std/sys/ext/io/type.RawFd.html' title='std::sys::ext::io::RawFd'>RawFd</a>, flags: <a class='type' href='https://doc.rust-lang.org/libc/x86_64-unknown-linux-gnu/libc/type.c_uint.html' title='libc::c_uint'>c_uint</a>) -&gt; <a class='struct' href='../dbus/struct.ConnectionItems.html' title='dbus::ConnectionItems'>ConnectionItems</a></code></h4>
+
+<p>See the <code>Watch</code> struct for an example.</p>
+</div><h4 id='method.watch_handle' class='method'><code>fn <a href='#method.watch_handle' class='fnname'>watch_handle</a>(&amp;self, fd: <a class='type' href='https://doc.rust-lang.org/nightly/std/sys/ext/io/type.RawFd.html' title='std::sys::ext::io::RawFd'>RawFd</a>, flags: <a class='type' href='https://doc.rust-lang.org/nightly/std/os/raw/type.c_uint.html' title='std::os::raw::c_uint'>c_uint</a>) -&gt; <a class='struct' href='../dbus/struct.ConnectionItems.html' title='dbus::ConnectionItems'>ConnectionItems</a></code></h4>
 <div class='docblock'><p>Async I/O: Call this function whenever you detected an event on the Fd,
 Flags are a set of WatchEvent bits.
 The returned iterator will return pending items only, never block for new events.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a></code></h3><div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#method.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
-</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html' title='core::fmt::Error'>Error</a>&gt;</code></h4>
+
+<p>See the <code>Watch</code> struct for an example.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-5570' class='srclink' href='../src/dbus/src/lib.rs.html#525-532' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-5573' class='srclink' href='../src/dbus/src/lib.rs.html#534-538' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html' title='core::fmt::Error'>Error</a>&gt;</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -126,7 +137,7 @@ The returned iterator will return pending items only, never block for new events
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

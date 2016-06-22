@@ -9,8 +9,9 @@
 
     <title>lib.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
 
     
     
@@ -691,6 +692,25 @@
 <span id="648">648</span>
 <span id="649">649</span>
 <span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! D-Bus bindings for Rust</span>
 <span class='doccomment'>//!</span>
@@ -726,6 +746,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::{<span class='ident'>Cell</span>, <span class='ident'>RefCell</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>unix</span>::<span class='ident'>io</span>::<span class='ident'>RawFd</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>raw</span>::{<span class='ident'>c_void</span>, <span class='ident'>c_char</span>, <span class='ident'>c_int</span>, <span class='ident'>c_uint</span>};
 
 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>ffi</span>;
@@ -804,7 +825,7 @@
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>arg</span> {
     <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>msgarg</span>::{<span class='ident'>Arg</span>, <span class='ident'>FixedArray</span>, <span class='ident'>Get</span>, <span class='ident'>DictKey</span>, <span class='ident'>Append</span>};
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>msgarg</span>::{<span class='ident'>Iter</span>, <span class='ident'>IterAppend</span>, <span class='ident'>Array</span>, <span class='ident'>Variant</span>, <span class='ident'>Dict</span>};
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>msgarg</span>::{<span class='ident'>Iter</span>, <span class='ident'>TypeMismatchError</span>, <span class='ident'>IterAppend</span>, <span class='ident'>Array</span>, <span class='ident'>Variant</span>, <span class='ident'>Dict</span>};
 }
 
 
@@ -866,7 +887,7 @@
 
 <span class='kw'>unsafe</span> <span class='kw'>impl</span> <span class='ident'>Send</span> <span class='kw'>for</span> <span class='ident'>Error</span> {}
 
-<span class='kw'>fn</span> <span class='ident'>c_str_to_slice</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>libc</span>::<span class='ident'>c_char</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
+<span class='kw'>fn</span> <span class='ident'>c_str_to_slice</span>(<span class='ident'>c</span>: <span class='kw-2'>&amp;</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
     <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>c</span> <span class='op'>==</span> <span class='ident'>ptr</span>::<span class='ident'>null</span>() { <span class='prelude-val'>None</span> }
     <span class='kw'>else</span> { <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>from_utf8</span>( <span class='kw'>unsafe</span> { <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='op'>*</span><span class='ident'>c</span>).<span class='ident'>to_bytes</span>() }).<span class='ident'>ok</span>() }
 }
@@ -935,6 +956,17 @@
     }
 }
 
+<span class='kw'>impl</span> <span class='ident'>WatchEvent</span> {
+    <span class='doccomment'>/// After running poll, this transforms the revents into a parameter you can send into `Connection::watch_handle`</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_revents</span>(<span class='ident'>revents</span>: <span class='ident'>libc</span>::<span class='ident'>c_short</span>) <span class='op'>-&gt;</span> <span class='ident'>c_uint</span> {
+        <span class='number'>0</span> <span class='op'>+</span>
+        <span class='kw'>if</span> (<span class='ident'>revents</span> <span class='kw-2'>&amp;</span> <span class='ident'>libc</span>::<span class='ident'>POLLIN</span>) <span class='op'>!=</span> <span class='number'>0</span> { <span class='ident'>WatchEvent</span>::<span class='ident'>Readable</span> <span class='kw'>as</span> <span class='ident'>c_uint</span> } <span class='kw'>else</span> { <span class='number'>0</span> } <span class='op'>+</span>
+        <span class='kw'>if</span> (<span class='ident'>revents</span> <span class='kw-2'>&amp;</span> <span class='ident'>libc</span>::<span class='ident'>POLLOUT</span>) <span class='op'>!=</span> <span class='number'>0</span> { <span class='ident'>WatchEvent</span>::<span class='ident'>Writable</span> <span class='kw'>as</span> <span class='ident'>c_uint</span> } <span class='kw'>else</span> { <span class='number'>0</span> } <span class='op'>+</span>
+        <span class='kw'>if</span> (<span class='ident'>revents</span> <span class='kw-2'>&amp;</span> <span class='ident'>libc</span>::<span class='ident'>POLLERR</span>) <span class='op'>!=</span> <span class='number'>0</span> { <span class='ident'>WatchEvent</span>::<span class='ident'>Error</span> <span class='kw'>as</span> <span class='ident'>c_uint</span> } <span class='kw'>else</span> { <span class='number'>0</span> } <span class='op'>+</span>
+        <span class='kw'>if</span> (<span class='ident'>revents</span> <span class='kw-2'>&amp;</span> <span class='ident'>libc</span>::<span class='ident'>POLLHUP</span>) <span class='op'>!=</span> <span class='number'>0</span> { <span class='ident'>WatchEvent</span>::<span class='ident'>Hangup</span> <span class='kw'>as</span> <span class='ident'>c_uint</span> } <span class='kw'>else</span> { <span class='number'>0</span> } 
+    }
+}
+
 <span class='doccomment'>/// When listening for incoming events on the D-Bus, this enum will tell you what type</span>
 <span class='doccomment'>/// of incoming event has happened.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
@@ -967,7 +999,7 @@
 
             <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>timeout_ms</span> {
                 <span class='prelude-val'>Some</span>(<span class='ident'>t</span>) <span class='op'>=&gt;</span> {
-                    <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>dbus_connection_read_write_dispatch</span>(<span class='self'>self</span>.<span class='ident'>c</span>.<span class='ident'>conn</span>(), <span class='ident'>t</span> <span class='kw'>as</span> <span class='ident'>libc</span>::<span class='ident'>c_int</span>) };
+                    <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>dbus_connection_read_write_dispatch</span>(<span class='self'>self</span>.<span class='ident'>c</span>.<span class='ident'>conn</span>(), <span class='ident'>t</span> <span class='kw'>as</span> <span class='ident'>c_int</span>) };
                     <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>c</span>.<span class='ident'>i</span>.<span class='ident'>pending_items</span>.<span class='ident'>borrow</span>().<span class='ident'>is_empty</span>() { <span class='kw'>continue</span> };
                     <span class='kw'>if</span> <span class='ident'>r</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='kw'>return</span> <span class='prelude-val'>None</span>; }
                     <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>ConnectionItem</span>::<span class='ident'>Nothing</span>);
@@ -999,9 +1031,9 @@
 }
 
 <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span> <span class='ident'>filter_message_cb</span>(<span class='ident'>conn</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>ffi</span>::<span class='ident'>DBusConnection</span>, <span class='ident'>msg</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>ffi</span>::<span class='ident'>DBusMessage</span>,
-    <span class='ident'>user_data</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span>) <span class='op'>-&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>DBusHandlerResult</span> {
+    <span class='ident'>user_data</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>) <span class='op'>-&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>DBusHandlerResult</span> {
 
-    <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>message</span>::<span class='ident'>message_from_ptr</span>(<span class='ident'>msg</span>, <span class='boolval'>true</span>);
+    <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>message</span>::<span class='ident'>message_from_ptr</span>(<span class='ident'>msg</span>, <span class='boolvalue'>true</span>);
     <span class='kw'>let</span> <span class='ident'>i</span>: <span class='kw-2'>&amp;</span><span class='ident'>IConnection</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='ident'>user_data</span>) };
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>i</span>.<span class='ident'>conn</span>.<span class='ident'>get</span>() <span class='op'>==</span> <span class='ident'>conn</span>);
 
@@ -1022,9 +1054,9 @@
 }
 
 <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span> <span class='ident'>object_path_message_cb</span>(<span class='ident'>conn</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>ffi</span>::<span class='ident'>DBusConnection</span>, <span class='ident'>msg</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>ffi</span>::<span class='ident'>DBusMessage</span>,
-    <span class='ident'>user_data</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span>) <span class='op'>-&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>DBusHandlerResult</span> {
+    <span class='ident'>user_data</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>) <span class='op'>-&gt;</span> <span class='ident'>ffi</span>::<span class='ident'>DBusHandlerResult</span> {
 
-    <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>message</span>::<span class='ident'>message_from_ptr</span>(<span class='ident'>msg</span>, <span class='boolval'>true</span>);
+    <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>message</span>::<span class='ident'>message_from_ptr</span>(<span class='ident'>msg</span>, <span class='boolvalue'>true</span>);
     <span class='kw'>let</span> <span class='ident'>i</span>: <span class='kw-2'>&amp;</span><span class='ident'>IConnection</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='ident'>user_data</span>) };
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>i</span>.<span class='ident'>conn</span>.<span class='ident'>get</span>() <span class='op'>==</span> <span class='ident'>conn</span>);
     <span class='ident'>i</span>.<span class='ident'>pending_items</span>.<span class='ident'>borrow_mut</span>().<span class='ident'>push_back</span>(<span class='ident'>ConnectionItem</span>::<span class='ident'>MethodCall</span>(<span class='ident'>m</span>));
@@ -1072,12 +1104,12 @@
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>Error</span>::<span class='ident'>empty</span>();
         <span class='kw'>let</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
             <span class='ident'>ffi</span>::<span class='ident'>dbus_connection_send_with_reply_and_block</span>(<span class='self'>self</span>.<span class='ident'>conn</span>(), <span class='ident'>message</span>::<span class='ident'>get_message_ptr</span>(<span class='kw-2'>&amp;</span><span class='ident'>msg</span>),
-                <span class='ident'>timeout_ms</span> <span class='kw'>as</span> <span class='ident'>libc</span>::<span class='ident'>c_int</span>, <span class='ident'>e</span>.<span class='ident'>get_mut</span>())
+                <span class='ident'>timeout_ms</span> <span class='kw'>as</span> <span class='ident'>c_int</span>, <span class='ident'>e</span>.<span class='ident'>get_mut</span>())
         };
         <span class='kw'>if</span> <span class='ident'>response</span> <span class='op'>==</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>() {
             <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>);
         }
-        <span class='prelude-val'>Ok</span>(<span class='ident'>message</span>::<span class='ident'>message_from_ptr</span>(<span class='ident'>response</span>, <span class='boolval'>false</span>))
+        <span class='prelude-val'>Ok</span>(<span class='ident'>message</span>::<span class='ident'>message_from_ptr</span>(<span class='ident'>response</span>, <span class='boolvalue'>false</span>))
     }
 
     <span class='doccomment'>/// Sends a message over the D-Bus without waiting. Useful for sending signals and method call replies.</span>
@@ -1116,7 +1148,7 @@
             <span class='ident'>dbus_internal_pad4</span>: <span class='prelude-val'>None</span>,
         };
         <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>user_data</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>libc</span>::<span class='ident'>c_void</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>i</span>);
+            <span class='kw'>let</span> <span class='ident'>user_data</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>i</span>);
             <span class='ident'>ffi</span>::<span class='ident'>dbus_connection_try_register_object_path</span>(<span class='self'>self</span>.<span class='ident'>conn</span>(), <span class='ident'>p</span>.<span class='ident'>as_ptr</span>(), <span class='kw-2'>&amp;</span><span class='ident'>vtable</span>, <span class='ident'>user_data</span>, <span class='ident'>e</span>.<span class='ident'>get_mut</span>())
         };
         <span class='kw'>if</span> <span class='ident'>r</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) } <span class='kw'>else</span> { <span class='prelude-val'>Ok</span>(()) }
@@ -1132,7 +1164,7 @@
     <span class='doccomment'>/// List registered object paths.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>list_registered_object_paths</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>path</span>);
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>clist</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>libc</span>::<span class='ident'>c_char</span> <span class='op'>=</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>clist</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_char</span> <span class='op'>=</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>();
         <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>dbus_connection_list_registered</span>(<span class='self'>self</span>.<span class='ident'>conn</span>(), <span class='ident'>p</span>.<span class='ident'>as_ptr</span>(), <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>clist</span>) };
         <span class='kw'>if</span> <span class='ident'>r</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Out of memory&quot;</span>); }
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
@@ -1167,6 +1199,9 @@
     }
 
     <span class='doccomment'>/// Add a match rule to match messages on the message bus.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// See the `unity_focused_window` example for how to use this to catch signals.</span>
+    <span class='doccomment'>/// (The syntax of the &quot;rule&quot; string is specified in the [D-Bus specification](https://dbus.freedesktop.org/doc/dbus-specification.html#message-bus-routing-match-rules).)</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_match</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>rule</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>Error</span>::<span class='ident'>empty</span>();
         <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>to_c_str</span>(<span class='ident'>rule</span>);
@@ -1183,6 +1218,8 @@
     }
 
     <span class='doccomment'>/// Async I/O: Get an up-to-date list of file descriptors to watch.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// See the `Watch` struct for an example.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>watch_fds</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Watch</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>watches</span>.<span class='ident'>as_ref</span>().<span class='ident'>unwrap</span>().<span class='ident'>get_enabled_fds</span>()
     }
@@ -1190,7 +1227,9 @@
     <span class='doccomment'>/// Async I/O: Call this function whenever you detected an event on the Fd,</span>
     <span class='doccomment'>/// Flags are a set of WatchEvent bits.</span>
     <span class='doccomment'>/// The returned iterator will return pending items only, never block for new events.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>watch_handle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>fd</span>: <span class='ident'>RawFd</span>, <span class='ident'>flags</span>: <span class='ident'>libc</span>::<span class='ident'>c_uint</span>) <span class='op'>-&gt;</span> <span class='ident'>ConnectionItems</span> {
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// See the `Watch` struct for an example.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>watch_handle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>fd</span>: <span class='ident'>RawFd</span>, <span class='ident'>flags</span>: <span class='ident'>c_uint</span>) <span class='op'>-&gt;</span> <span class='ident'>ConnectionItems</span> {
         <span class='self'>self</span>.<span class='ident'>i</span>.<span class='ident'>watches</span>.<span class='ident'>as_ref</span>().<span class='ident'>unwrap</span>().<span class='ident'>watch_handle</span>(<span class='ident'>fd</span>, <span class='ident'>flags</span>);
         <span class='ident'>ConnectionItems</span> { <span class='ident'>c</span>: <span class='self'>self</span>, <span class='ident'>timeout_ms</span>: <span class='prelude-val'>None</span> }
     }
@@ -1214,7 +1253,7 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
-    <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>Connection</span>, <span class='ident'>Message</span>, <span class='ident'>BusType</span>, <span class='ident'>MessageItem</span>, <span class='ident'>ConnectionItem</span>, <span class='ident'>NameFlag</span>,
+    <span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>Connection</span>, <span class='ident'>Message</span>, <span class='ident'>BusType</span>, <span class='ident'>MessageItem</span>, <span class='ident'>ConnectionItem</span>, <span class='ident'>NameFlag</span>,
         <span class='ident'>RequestNameReply</span>, <span class='ident'>ReleaseNameReply</span>};
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -1251,7 +1290,7 @@
         <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>c</span>.<span class='ident'>send_with_reply_and_block</span>(<span class='ident'>m</span>, <span class='number'>2000</span>).<span class='ident'>unwrap</span>();
         <span class='kw'>let</span> <span class='ident'>reply</span> <span class='op'>=</span> <span class='ident'>r</span>.<span class='ident'>get_items</span>();
         <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>reply</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>reply</span>, <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>MessageItem</span>::<span class='ident'>Bool</span>(<span class='boolval'>true</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>reply</span>, <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>MessageItem</span>::<span class='ident'>Bool</span>(<span class='boolvalue'>true</span>)));
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -1386,7 +1425,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
@@ -1395,13 +1434,13 @@
     
 
     <script>
-        window.rootPath = "../../";
+        window.rootPath = "../../../";
         window.currentCrate = "dbus";
         window.playgroundUrl = "";
     </script>
-    <script src="../../jquery.js"></script>
-    <script src="../../main.js"></script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
     
-    <script defer src="../../search-index.js"></script>
+    <script defer src="../../../search-index.js"></script>
 </body>
 </html>

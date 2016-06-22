@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,25 +44,34 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>dbus</a>::<wbr><a href='index.html'>tree</a>::<wbr><a class='struct' href=''>Signal</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-4916' class='srclink' href='../../src/dbus/methoddisp.rs.html#410-415' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-4899' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#420-425' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Signal {
     // some fields omitted
 }</pre><div class='docblock'><p>A D-Bus Signal.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../dbus/tree/struct.Signal.html' title='dbus::tree::Signal'>Signal</a></code></h3><div class='impl-items'><h4 id='method.emit' class='method'><code>fn <a href='#method.emit' class='fnname'>emit</a>(&amp;self, items: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='enum' href='../../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a></code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../dbus/tree/struct.Signal.html' title='dbus::tree::Signal'>Signal</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4913' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#427-461' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.emit' class='method'><code>fn <a href='#method.emit' class='fnname'>emit</a>(&amp;self, items: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='enum' href='../../dbus/enum.MessageItem.html' title='dbus::MessageItem'>MessageItem</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a></code></h4>
 <div class='docblock'><p>Returns a message which emits the signal when sent.
 Panics if the signal is not inserted in an object path.</p>
+</div><h4 id='method.msg' class='method'><code>fn <a href='#method.msg' class='fnname'>msg</a>(&amp;self) -&gt; <a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a></code></h4>
+<div class='docblock'><p>Returns a message which emits the signal when sent.
+Panics if the signal is not inserted in an object path.</p>
+
+<p>Same as &quot;emit&quot; but does not take a &quot;MessageItem&quot; argument.</p>
 </div><h4 id='method.arg' class='method'><code>fn <a href='#method.arg' class='fnname'>arg</a>&lt;A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;&gt;(self, a: A) -&gt; Self</code></h4>
 <div class='docblock'><p>Builder method that adds an Argument to the Signal.</p>
-</div><h4 id='method.args' class='method'><code>fn <a href='#method.args' class='fnname'>args</a>&lt;Z: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;, A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html' title='core::iter::IntoIterator'>IntoIterator</a>&lt;Item=Z&gt;&gt;(self, a: A) -&gt; Self</code></h4>
+</div><h4 id='method.sarg' class='method'><code>fn <a href='#method.sarg' class='fnname'>sarg</a>&lt;A: <a class='trait' href='../../dbus/arg/trait.Arg.html' title='dbus::arg::Arg'>Arg</a>, S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;(self, s: S) -&gt; Self</code></h4>
+<div class='docblock'><p>Builder method that adds an Argument to the Signal.</p>
+</div><h4 id='method.args' class='method'><code>fn <a href='#method.args' class='fnname'>args</a>&lt;Z: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;, A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html' title='core::iter::traits::IntoIterator'>IntoIterator</a>&lt;Item=Z&gt;&gt;(self, a: A) -&gt; Self</code></h4>
 <div class='docblock'><p>Builder method that adds multiple &quot;rguments to the Signel.</p>
 </div><h4 id='method.annotate' class='method'><code>fn <a href='#method.annotate' class='fnname'>annotate</a>&lt;N: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;, V: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;(self, name: N, value: V) -&gt; Self</code></h4>
 <div class='docblock'><p>Add an annotation to this Signal.</p>
 </div><h4 id='method.deprecated' class='method'><code>fn <a href='#method.deprecated' class='fnname'>deprecated</a>(self) -&gt; Self</code></h4>
 <div class='docblock'><p>Add an annotation that this entity is deprecated.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../dbus/tree/struct.Signal.html' title='dbus::tree::Signal'>Signal</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../dbus/tree/struct.Signal.html' title='dbus::tree::Signal'>Signal</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4904' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#418' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -105,7 +115,7 @@ Panics if the signal is not inserted in an object path.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

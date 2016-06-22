@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,32 +44,35 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>dbus</a>::<wbr><a href='index.html'>tree</a>::<wbr><a class='struct' href=''>Method</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-4567' class='srclink' href='../../src/dbus/methoddisp.rs.html#144-150' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-4594' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#144-150' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Method&lt;M&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>A D-Bus Method.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;M&gt; <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.in_arg' class='method'><code>fn <a href='#method.in_arg' class='fnname'>in_arg</a>&lt;A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;&gt;(self, a: A) -&gt; Self</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M&gt; <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4612' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#152-177' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.in_arg' class='method'><code>fn <a href='#method.in_arg' class='fnname'>in_arg</a>&lt;A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;&gt;(self, a: A) -&gt; Self</code></h4>
 <div class='docblock'><p>Builder method that adds an &quot;in&quot; Argument to this Method.</p>
 </div><h4 id='method.inarg' class='method'><code>fn <a href='#method.inarg' class='fnname'>inarg</a>&lt;A: <a class='trait' href='../../dbus/arg/trait.Arg.html' title='dbus::arg::Arg'>Arg</a>, S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;(self, s: S) -&gt; Self</code></h4>
 <div class='docblock'><p>Builder method that adds an &quot;in&quot; Argument to this Method.</p>
-</div><h4 id='method.in_args' class='method'><code>fn <a href='#method.in_args' class='fnname'>in_args</a>&lt;Z: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;, A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html' title='core::iter::IntoIterator'>IntoIterator</a>&lt;Item=Z&gt;&gt;(self, a: A) -&gt; Self</code></h4>
+</div><h4 id='method.in_args' class='method'><code>fn <a href='#method.in_args' class='fnname'>in_args</a>&lt;Z: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;, A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html' title='core::iter::traits::IntoIterator'>IntoIterator</a>&lt;Item=Z&gt;&gt;(self, a: A) -&gt; Self</code></h4>
 <div class='docblock'><p>Builder method that adds multiple &quot;in&quot; Arguments to this Method.</p>
 </div><h4 id='method.out_arg' class='method'><code>fn <a href='#method.out_arg' class='fnname'>out_arg</a>&lt;A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;&gt;(self, a: A) -&gt; Self</code></h4>
 <div class='docblock'><p>Builder method that adds an &quot;out&quot; Argument to this Method.</p>
 </div><h4 id='method.outarg' class='method'><code>fn <a href='#method.outarg' class='fnname'>outarg</a>&lt;A: <a class='trait' href='../../dbus/arg/trait.Arg.html' title='dbus::arg::Arg'>Arg</a>, S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;(self, s: S) -&gt; Self</code></h4>
 <div class='docblock'><p>Builder method that adds an &quot;out&quot; Argument to this Method.</p>
-</div><h4 id='method.out_args' class='method'><code>fn <a href='#method.out_args' class='fnname'>out_args</a>&lt;Z: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;, A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html' title='core::iter::IntoIterator'>IntoIterator</a>&lt;Item=Z&gt;&gt;(self, a: A) -&gt; Self</code></h4>
+</div><h4 id='method.out_args' class='method'><code>fn <a href='#method.out_args' class='fnname'>out_args</a>&lt;Z: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../dbus/tree/struct.Argument.html' title='dbus::tree::Argument'>Argument</a>&gt;, A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html' title='core::iter::traits::IntoIterator'>IntoIterator</a>&lt;Item=Z&gt;&gt;(self, a: A) -&gt; Self</code></h4>
 <div class='docblock'><p>Builder method that adds multiple &quot;out&quot; Arguments to this Method.</p>
 </div><h4 id='method.annotate' class='method'><code>fn <a href='#method.annotate' class='fnname'>annotate</a>&lt;N: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;, V: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;(self, name: N, value: V) -&gt; Self</code></h4>
 <div class='docblock'><p>Add an annotation to the method.</p>
 </div><h4 id='method.deprecated' class='method'><code>fn <a href='#method.deprecated' class='fnname'>deprecated</a>(self) -&gt; Self</code></h4>
 <div class='docblock'><p>Add an annotation that this entity is deprecated.</p>
-</div></div><h3 class='impl'><code>impl&lt;M: MethodType&gt; <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.call' class='method'><code>fn <a href='#method.call' class='fnname'>call</a>(&amp;self, m: &amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, o: &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;M&gt;, i: &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;M&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a></code></h4>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;M: MethodType&gt; <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4654' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#179-184' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.call' class='method'><code>fn <a href='#method.call' class='fnname'>call</a>(&amp;self, m: &amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>, o: &amp;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;M&gt;, i: &amp;<a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;M&gt;) -&gt; <a class='type' href='../../dbus/tree/type.MethodResult.html' title='dbus::tree::MethodResult'>MethodResult</a></code></h4>
 <div class='docblock'><p>Call the Method.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl&lt;M: <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><span class='in-band'><code>impl&lt;M: <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../dbus/tree/struct.Method.html' title='dbus::tree::Method'>Method</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4601' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#142' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -112,7 +116,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

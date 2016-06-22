@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,10 +44,10 @@
 
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>dbus</a>::<wbr><a class='mod' href=''>arg</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-4235' class='srclink' href='../../src/dbus/lib.rs.html#111-114' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-4262' class='srclink' href='../../src/dbus/src/lib.rs.html#112-115' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Types and traits for easily getting a message&#39;s arguments, or appening a message with arguments.</p>
 
 <p>Using this module should be faster than
@@ -111,100 +112,87 @@ collect it into, e g, a <code>HashMap</code>.</p>
 <p><code>OwnedFd</code> - a file descriptor sent from the remote side.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Array.html'
-                               title='dbus::arg::Array'>Array</a></td>
-                        <td class='docblock short'>
-                             <p>Represents a D-Bus Array. Maximum flexibility (wraps an iterator of items to append).
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Array.html'
+                                  title='dbus::arg::Array'>Array</a></td>
+                           <td class='docblock short'>
+                                <p>Represents a D-Bus Array. Maximum flexibility (wraps an iterator of items to append).
 Note: Slices of FixedArray can be faster.</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Dict.html'
-                               title='dbus::arg::Dict'>Dict</a></td>
-                        <td class='docblock short'>
-                             <p>Append a D-Bus dict type (i e, an array of dict entries).</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Iter.html'
-                               title='dbus::arg::Iter'>Iter</a></td>
-                        <td class='docblock short'>
-                             <p>Helper struct for retrieve one or more arguments from a Message.
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Dict.html'
+                                  title='dbus::arg::Dict'>Dict</a></td>
+                           <td class='docblock short'>
+                                <p>Append a D-Bus dict type (i e, an array of dict entries).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Iter.html'
+                                  title='dbus::arg::Iter'>Iter</a></td>
+                           <td class='docblock short'>
+                                <p>Helper struct for retrieve one or more arguments from a Message.
 Note that this is not a Rust iterator, because arguments are often of different types</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.IterAppend.html'
-                               title='dbus::arg::IterAppend'>IterAppend</a></td>
-                        <td class='docblock short'>
-                             <p>Helper struct for appending one or more arguments to a Message.</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Variant.html'
-                               title='dbus::arg::Variant'>Variant</a></td>
-                        <td class='docblock short'>
-                             <p>A simple wrapper to specify a D-Bus variant.</p>
-
-                        </td>
-                    </tr>
-                </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.IterAppend.html'
+                                  title='dbus::arg::IterAppend'>IterAppend</a></td>
+                           <td class='docblock short'>
+                                <p>Helper struct for appending one or more arguments to a Message.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.TypeMismatchError.html'
+                                  title='dbus::arg::TypeMismatchError'>TypeMismatchError</a></td>
+                           <td class='docblock short'>
+                                <p>Error struct to indicate a D-Bus argument type mismatch.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Variant.html'
+                                  title='dbus::arg::Variant'>Variant</a></td>
+                           <td class='docblock short'>
+                                <p>A simple wrapper to specify a D-Bus variant.</p>
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='trait' href='trait.Append.html'
-                               title='dbus::arg::Append'>Append</a></td>
-                        <td class='docblock short'>
-                             <p>Types that can be appended to a message as arguments implement this trait.</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='trait' href='trait.Arg.html'
-                               title='dbus::arg::Arg'>Arg</a></td>
-                        <td class='docblock short'>
-                             <p>Types that can represent a D-Bus message argument implement this trait.</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='trait' href='trait.DictKey.html'
-                               title='dbus::arg::DictKey'>DictKey</a></td>
-                        <td class='docblock short'>
-                             <p>Types that can be used as keys in a dict type implement this trait.</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='trait' href='trait.FixedArray.html'
-                               title='dbus::arg::FixedArray'>FixedArray</a></td>
-                        <td class='docblock short'>
-                             <p>If a type implements this trait, it means the size and alignment is the same
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.Append.html'
+                                  title='dbus::arg::Append'>Append</a></td>
+                           <td class='docblock short'>
+                                <p>Types that can be appended to a message as arguments implement this trait.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.Arg.html'
+                                  title='dbus::arg::Arg'>Arg</a></td>
+                           <td class='docblock short'>
+                                <p>Types that can represent a D-Bus message argument implement this trait.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.DictKey.html'
+                                  title='dbus::arg::DictKey'>DictKey</a></td>
+                           <td class='docblock short'>
+                                <p>Types that can be used as keys in a dict type implement this trait.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.FixedArray.html'
+                                  title='dbus::arg::FixedArray'>FixedArray</a></td>
+                           <td class='docblock short'>
+                                <p>If a type implements this trait, it means the size and alignment is the same
 as in D-Bus. This means that you can quickly append and get slices of this type.</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='trait' href='trait.Get.html'
-                               title='dbus::arg::Get'>Get</a></td>
-                        <td class='docblock short'>
-                             <p>Types that can be retrieved from a message as arguments implement this trait.</p>
-
-                        </td>
-                    </tr>
-                </table></section>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.Get.html'
+                                  title='dbus::arg::Get'>Get</a></td>
+                           <td class='docblock short'>
+                                <p>Types that can be retrieved from a message as arguments implement this trait.</p>
+                           </td>
+                       </tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -247,7 +235,7 @@ as in D-Bus. This means that you can quickly append and get slices of this type.
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,24 +44,37 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>dbus</a>::<wbr><a href='index.html'>tree</a>::<wbr><a class='struct' href=''>Tree</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-5204' class='srclink' href='../../src/dbus/methoddisp.rs.html#654-656' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-5197' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#677-679' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Tree&lt;M&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>A collection of object paths.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;M: MethodType&gt; <a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.add' class='method'><code>fn <a href='#method.add' class='fnname'>add</a>(self, p: <a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;M&gt;) -&gt; Self</code></h4>
-<div class='docblock'><p>Add a Object Path to this Tree.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M: MethodType&gt; <a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-5207' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#681-757' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.add' class='method'><code>fn <a href='#method.add' class='fnname'>add</a>(self, p: <a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;M&gt;) -&gt; Self</code></h4>
+<div class='docblock'><p>Add an Object Path to this Tree.</p>
+
+<p>Note: This does not unregister a path with the connection, so if the tree is currently registered,
+you might want to call Connection::register_object_path to add the path manually.</p>
+</div><h4 id='method.add_o_ref' class='method'><code>fn <a href='#method.add_o_ref' class='fnname'>add_o_ref</a>(&amp;mut self, p: <a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;M&gt;) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;M&gt;&gt;</code></h4>
+<div class='docblock'><p>Adds an ObjectPath to this Tree. Returns a reference to the ObjectPath.
+The note for add() also applies here.</p>
+</div><h4 id='method.remove' class='method'><code>fn <a href='#method.remove' class='fnname'>remove</a>(&amp;mut self, p: &amp;<a class='struct' href='../../dbus/struct.Path.html' title='dbus::Path'>Path</a>&lt;'static&gt;) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;<a class='struct' href='../../dbus/tree/struct.ObjectPath.html' title='dbus::tree::ObjectPath'>ObjectPath</a>&lt;M&gt;&gt;&gt;</code></h4>
+<div class='docblock'><p>Remove a object path from the Tree. Returns the object path removed, or None if not found.</p>
+
+<p>Note: This does not unregister a path with the connection, so if the tree is currently registered,
+you might want to call Connection::unregister_object_path to remove the path manually.</p>
 </div><h4 id='method.set_registered' class='method'><code>fn <a href='#method.set_registered' class='fnname'>set_registered</a>(&amp;self, c: &amp;<a class='struct' href='../../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a>, b: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='../../dbus/struct.Error.html' title='dbus::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Registers or unregisters all object paths in the tree.</p>
 </div><h4 id='method.handle' class='method'><code>fn <a href='#method.handle' class='fnname'>handle</a>(&amp;self, m: &amp;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../dbus/struct.Message.html' title='dbus::Message'>Message</a>&gt;&gt;</code></h4>
 <div class='docblock'><p>Handles a message. Will return None in case the object path was not
 found, or otherwise a list of messages to be sent back.</p>
-</div><h4 id='method.run' class='method'><code>fn <a href='#method.run' class='fnname'>run</a>&lt;'a, I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.Iterator.html' title='core::iter::Iterator'>Iterator</a>&lt;Item=<a class='enum' href='../../dbus/enum.ConnectionItem.html' title='dbus::ConnectionItem'>ConnectionItem</a>&gt;&gt;(&amp;'a self, c: &amp;'a <a class='struct' href='../../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a>, i: I) -&gt; <a class='struct' href='../../dbus/tree/struct.TreeServer.html' title='dbus::tree::TreeServer'>TreeServer</a>&lt;'a, I, M&gt;</code></h4>
+</div><h4 id='method.run' class='method'><code>fn <a href='#method.run' class='fnname'>run</a>&lt;'a, I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a>&lt;Item=<a class='enum' href='../../dbus/enum.ConnectionItem.html' title='dbus::ConnectionItem'>ConnectionItem</a>&gt;&gt;(&amp;'a self, c: &amp;'a <a class='struct' href='../../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a>, i: I) -&gt; <a class='struct' href='../../dbus/tree/struct.TreeServer.html' title='dbus::tree::TreeServer'>TreeServer</a>&lt;'a, I, M&gt;</code></h4>
 <div class='docblock'><p>This method takes an <code>ConnectionItem</code> iterator (you get it from <code>Connection::iter()</code>)
 and handles all matching items. Non-matching items (e g signals) are passed through.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl&lt;M: <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;M&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><span class='in-band'><code>impl&lt;M: <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../dbus/tree/struct.Tree.html' title='dbus::tree::Tree'>Tree</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-5200' class='srclink' href='../../src/dbus/src/methoddisp.rs.html#676' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -104,7 +118,7 @@ and handles all matching items. Non-matching items (e g signals) are passed thro
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

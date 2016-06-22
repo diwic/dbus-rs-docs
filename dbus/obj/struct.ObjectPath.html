@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,14 +44,15 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>dbus</a>::<wbr><a href='index.html'>obj</a>::<wbr><a class='struct' href=''>ObjectPath</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-1780' class='srclink' href='../../src/dbus/objpath.rs.html#177-180' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1782' class='srclink' href='../../src/dbus/src/objpath.rs.html#177-180' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ObjectPath&lt;'a&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>Represents a D-Bus object path, which can in turn contain Interfaces.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../../dbus/obj/struct.ObjectPath.html' title='dbus::obj::ObjectPath'>ObjectPath</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(conn: &amp;'a <a class='struct' href='../../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a>, path: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, introspectable: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../../dbus/obj/struct.ObjectPath.html' title='dbus::obj::ObjectPath'>ObjectPath</a>&lt;'a&gt;</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../../dbus/obj/struct.ObjectPath.html' title='dbus::obj::ObjectPath'>ObjectPath</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1997' class='srclink' href='../../src/dbus/src/objpath.rs.html#338-440' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(conn: &amp;'a <a class='struct' href='../../dbus/struct.Connection.html' title='dbus::Connection'>Connection</a>, path: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, introspectable: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../../dbus/obj/struct.ObjectPath.html' title='dbus::obj::ObjectPath'>ObjectPath</a>&lt;'a&gt;</code></h4>
 <div class='docblock'><p>Create a new ObjectPath.</p>
 </div><h4 id='method.insert_interface' class='method'><code>fn <a href='#method.insert_interface' class='fnname'>insert_interface</a>&lt;N: <a class='trait' href='https://doc.rust-lang.org/nightly/collections/string/trait.ToString.html' title='collections::string::ToString'>ToString</a>&gt;(&amp;mut self, name: N, i: <a class='struct' href='../../dbus/obj/struct.Interface.html' title='dbus::obj::Interface'>Interface</a>&lt;'a&gt;)</code></h4>
 <div class='docblock'><p>Add an Interface to this ObjectPath.</p>
@@ -63,7 +65,8 @@
 Return value: None =&gt; not handled (no match),
 Some(Err(())) =&gt; message reply send failed,
 Some(Ok()) =&gt; message reply send ok */</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../../dbus/obj/struct.ObjectPath.html' title='dbus::obj::ObjectPath'>ObjectPath</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#method.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../../dbus/obj/struct.ObjectPath.html' title='dbus::obj::ObjectPath'>ObjectPath</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1785' class='srclink' href='../../src/dbus/src/objpath.rs.html#182-187' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -107,7 +110,7 @@ Some(Ok()) =&gt; message reply send ok */</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
